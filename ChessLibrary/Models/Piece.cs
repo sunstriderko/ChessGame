@@ -16,6 +16,8 @@ namespace ChessLibrary.Models
         public PieceTypes PieceType { get; set; }
 
         public PieceColors PieceColor { get; set; }
+
+        public bool HasItMovedYet { get; set; } = false;
     }
 
     public enum PieceTypes

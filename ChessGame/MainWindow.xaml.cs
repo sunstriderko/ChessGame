@@ -5,8 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ChessLibrary.Models;
-using System.IO;
-using System.Drawing.Imaging;
+using ChessLibrary.Interfaces;
 
 namespace ChessGame
 {
@@ -33,10 +32,13 @@ namespace ChessGame
         Button buttonClickOne;
         Button buttonClickTwo;
         int pressLeftMouseButton;
-        int currentColumn;
-        int currentRow;
+        int previousColumn;
+        int previousRow;
+        int nextColumn;
+        int nextRow;
         Piece previousPiece;
         Piece nextPiece;
+        bool validMove;
 
         public MainWindow()
         {
@@ -55,7 +57,7 @@ namespace ChessGame
                 {new Piece(PieceTypes.Rook,PieceColors.Black),new Piece(PieceTypes.Knight,PieceColors.Black), new Piece(PieceTypes.Bishop,PieceColors.Black),new Piece(PieceTypes.King,PieceColors.Black), new Piece(PieceTypes.Queen,PieceColors.Black), new Piece(PieceTypes.Bishop,PieceColors.Black), new Piece(PieceTypes.Knight,PieceColors.Black), new Piece(PieceTypes.Rook,PieceColors.Black) },
             };
 
-            BoardCreator();          
+            BoardCreator();
         }
 
         public void BoardCreator()
@@ -157,7 +159,7 @@ namespace ChessGame
                             };
                         }
                     }
-                    
+
                     else if (myBoard[i, j].PieceType == PieceTypes.King)
                     {
                         if (myBoard[i, j].PieceColor == PieceColors.White)
@@ -191,10 +193,9 @@ namespace ChessGame
             if (pressLeftMouseButton == 0)
             {
                 buttonClickOne = (Button)sender;
-
-                currentColumn = Grid.GetColumn(buttonClickOne);
-                currentRow = Grid.GetRow(buttonClickOne);
-                previousPiece = myBoard[currentRow, currentColumn - 1];
+                previousColumn = Grid.GetColumn(buttonClickOne);
+                previousRow = Grid.GetRow(buttonClickOne);
+                previousPiece = myBoard[previousRow, previousColumn - 1];
 
                 pressLeftMouseButton++;
             }
@@ -202,23 +203,33 @@ namespace ChessGame
             else
             {
                 buttonClickTwo = (Button)sender;
+                nextColumn = Grid.GetColumn(buttonClickTwo);
+                nextRow = Grid.GetRow(buttonClickTwo);
+                nextPiece = myBoard[nextRow, nextColumn - 1];
 
-                currentColumn = Grid.GetColumn(buttonClickTwo);
-                currentRow = Grid.GetRow(buttonClickTwo);
+                Movement mov = new Movement();
 
-                nextPiece = myBoard[currentRow, currentColumn - 1];
+                validMove = mov.ValidMoveChecker(validMove, previousPiece, nextPiece, previousColumn, previousRow, nextColumn, nextRow);
 
-                nextPiece.PieceType = previousPiece.PieceType;
-                nextPiece.PieceColor = previousPiece.PieceColor;
+                if (validMove)
+                {
+                    nextPiece.PieceType = previousPiece.PieceType;
+                    nextPiece.PieceColor = previousPiece.PieceColor;
 
-                PieceReplacer(nextPiece, buttonClickTwo);
+                    PieceReplacer(nextPiece, buttonClickTwo);
 
-                previousPiece.PieceType = PieceTypes.Free;
-                previousPiece.PieceColor = PieceColors.None;
+                    previousPiece.PieceType = PieceTypes.Free;
+                    previousPiece.PieceColor = PieceColors.None;
 
-                PieceReplacer(previousPiece, buttonClickOne);
+                    PieceReplacer(previousPiece, buttonClickOne);
 
-                MoveReseter();
+                    MoveReseter();
+                }
+
+                else
+                {
+                    InvalidMover();
+                }
             }
         }
 
@@ -344,6 +355,13 @@ namespace ChessGame
             buttonClickOne = null;
             buttonClickTwo = null;
         }
+
+        public void InvalidMover()
+        {
+            MessageBox.Show("Invalid move. Submit a legit move only!.", "Invalid move.", MessageBoxButton.OK);
+
+            MoveReseter();
+        }       
     }
 }
 
