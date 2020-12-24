@@ -1,7 +1,7 @@
 APPLICATION is still UNDER DEVELOPMENT! Current progress: 85%!
-To-do(missing features): Check/Mate (endgame check)
-                         Castling
-                         En passant take
+To-do(missing features): Check/Mate (endgame check),
+                         Castling,
+                         En passant take,
                          Turn indicator(players know who is supposed to make a move)
 
 ChessGame is a WPF application using .NET Core.
