@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "W18MdrqcmAkr2ki6LcEumJSB1BlB0A2Praoq4HNUEDxRCA+amuckrQ6pE+HiQisysP4eeOXvqO/L1hAVomSLeA==",
+  "dgSpecHash": "UcjOaMVDZYH0SgBJoZQK+ZFQBj4DQ6ffsw8X4xDVSIL5DPKkikPpS5YCXJ6ZUCAH4VAb5o9bmB7AvKh4wmf0Kg==",
   "success": true,
   "projectFilePath": "C:\\Users\\adamc\\source\\repos\\ChessGame\\ChessLibrary\\ChessLibrary.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\adamc\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512"
+  ],
   "logs": []
 }

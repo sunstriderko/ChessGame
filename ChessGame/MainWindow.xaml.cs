@@ -14,6 +14,7 @@ namespace ChessGame
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Constants (Pieces images)
         const string pawnImageBlack = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_black_pawn_T.png";
         const string rookImageBlack = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_black_rook_T.png";
         const string bishopImageBlack = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_black_bishop_T.png";
@@ -27,7 +28,9 @@ namespace ChessGame
         const string knightImageWhite = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_white_knight_T.png";
         const string queenImageWhite = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_white_queen_T.png";
         const string kingImageWhite = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_white_king_T.png";
+        #endregion
 
+        #region Variables
         Piece[,] myBoard = new Piece[,] { };
         Button buttonClickOne;
         Button buttonClickTwo;
@@ -39,6 +42,12 @@ namespace ChessGame
         Piece previousPiece;
         Piece nextPiece;
         bool validMove;
+        bool blockCheck = true;
+        int placeholderColumn;
+        int placeholderRow;
+        int turnCounter = 1;
+        bool turnCheck;
+        #endregion
 
         public MainWindow()
         {
@@ -60,6 +69,7 @@ namespace ChessGame
             BoardCreator();
         }
 
+        #region Board
         public void BoardCreator()
         {
             for (int i = 0; i < 8; i++)
@@ -187,15 +197,16 @@ namespace ChessGame
             }
 
         }
+        #endregion
 
         public void Button_Click(object sender, RoutedEventArgs e)
         {
             if (pressLeftMouseButton == 0)
             {
                 buttonClickOne = (Button)sender;
-                previousColumn = Grid.GetColumn(buttonClickOne);
+                previousColumn = Grid.GetColumn(buttonClickOne) - 1;
                 previousRow = Grid.GetRow(buttonClickOne);
-                previousPiece = myBoard[previousRow, previousColumn - 1];
+                previousPiece = myBoard[previousRow, previousColumn];
 
                 pressLeftMouseButton++;
             }
@@ -203,27 +214,54 @@ namespace ChessGame
             else
             {
                 buttonClickTwo = (Button)sender;
-                nextColumn = Grid.GetColumn(buttonClickTwo);
+                nextColumn = Grid.GetColumn(buttonClickTwo) - 1;
                 nextRow = Grid.GetRow(buttonClickTwo);
-                nextPiece = myBoard[nextRow, nextColumn - 1];
+                nextPiece = myBoard[nextRow, nextColumn];
 
                 Movement mov = new Movement();
 
                 validMove = mov.ValidMoveChecker(validMove, previousPiece, nextPiece, previousColumn, previousRow, nextColumn, nextRow);
-
+                
+                
                 if (validMove)
                 {
-                    nextPiece.PieceType = previousPiece.PieceType;
-                    nextPiece.PieceColor = previousPiece.PieceColor;
+                    turnCheck = TurnChecker(previousPiece);
 
-                    PieceReplacer(nextPiece, buttonClickTwo);
+                    if (turnCheck)
+                    {
+                        blockCheck = BlockChecker(previousColumn, previousRow, nextColumn, nextRow, previousPiece);
 
-                    previousPiece.PieceType = PieceTypes.Free;
-                    previousPiece.PieceColor = PieceColors.None;
+                        if (blockCheck)
+                        {
+                            nextPiece.PieceType = previousPiece.PieceType;
+                            nextPiece.PieceColor = previousPiece.PieceColor;
+                            myBoard[nextRow, nextColumn].PieceType = previousPiece.PieceType;
+                            myBoard[nextRow, nextColumn].PieceColor = previousPiece.PieceColor;
 
-                    PieceReplacer(previousPiece, buttonClickOne);
+                            PieceReplacer(nextPiece, buttonClickTwo);
 
-                    MoveReseter();
+                            previousPiece.PieceType = PieceTypes.Free;
+                            previousPiece.PieceColor = PieceColors.None;
+                            myBoard[previousRow, previousColumn].PieceType = PieceTypes.Free;
+                            myBoard[previousRow, previousColumn].PieceColor = PieceColors.None;
+
+                            PieceReplacer(previousPiece, buttonClickOne);
+
+                            turnCounter++;
+
+                            MoveReseter();
+                        }
+
+                        else
+                        {
+                            BlockedMover();
+                        }
+                    }
+
+                    else
+                    {
+                        TurnMover();
+                    }
                 }
 
                 else
@@ -233,6 +271,7 @@ namespace ChessGame
             }
         }
 
+        #region Pieces/Turn successed
         public void PieceReplacer(Piece model, Button modelButton)
         {
             if (model.PieceType == PieceTypes.Pawn)
@@ -354,14 +393,165 @@ namespace ChessGame
             pressLeftMouseButton = 0;
             buttonClickOne = null;
             buttonClickTwo = null;
+            blockCheck = true;
+
+            previousColumn = 0;
+            previousRow= 0;
+            nextColumn = 0;
+            nextRow = 0;
+            placeholderColumn = 0;
+            placeholderRow = 0;
+        }
+        #endregion
+
+        #region Checkers
+        public bool BlockChecker(int previousModelColumn, int previousModelRow, int nextModelColumn, int nextModelRow, Piece modelPiece)
+        {
+
+            placeholderRow = previousModelRow - nextModelRow;
+            placeholderColumn = previousModelColumn - nextModelColumn;
+
+            placeholderRow = PlaceholdersFixer(placeholderRow);
+            placeholderColumn = PlaceholdersFixer(placeholderColumn);
+
+            if(modelPiece.PieceType == PieceTypes.Knight)
+            {
+                return true;
+            }
+
+            if (placeholderRow == 0)
+            {
+                for (int i = placeholderColumn; i != 0; i = IncrementWorker(i))
+                {
+
+                    if (myBoard[previousModelRow, previousModelColumn - i].PieceType != PieceTypes.Free)
+                    {
+                        blockCheck = false;
+                        break;
+                    }
+
+                    else
+                    {
+                        blockCheck = true;
+                    }
+                }
+            }
+
+            else if (placeholderColumn == 0)
+            {
+                for (int i = placeholderRow; i != 0; i = IncrementWorker(i))
+                {
+
+                    if (myBoard[previousModelRow - i, previousModelColumn].PieceType != PieceTypes.Free)
+                    {
+                        blockCheck = false;
+                        break;
+                    }
+
+                    else
+                    {
+                        blockCheck = true;                        
+                    }
+                }
+            }
+
+            else
+            {
+                int j = placeholderColumn;
+                for (int i = placeholderRow; i != 0; i = IncrementWorker(i))
+                {
+                    
+
+                    if (myBoard[previousModelRow - i, previousModelColumn - j].PieceType != PieceTypes.Free)
+                    {
+                        blockCheck = false;                        
+                        break;
+                    }
+
+                    else
+                    {
+                        blockCheck = true;
+                        j = IncrementWorker(j);
+                    }                 
+                }            
+            }
+           
+            return blockCheck;
         }
 
+        public bool TurnChecker(Piece model)
+        {
+            if (turnCounter % 2 != 0 && model.PieceColor == PieceColors.White)
+            {
+                return true;
+            }
+
+            else if (turnCounter % 2 == 0 && model.PieceColor == PieceColors.Black)
+            {
+                return true;
+            }
+
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region Invalid moves messengers
         public void InvalidMover()
         {
             MessageBox.Show("Invalid move. Submit a legit move only!.", "Invalid move.", MessageBoxButton.OK);
 
             MoveReseter();
-        }       
+        }
+
+        public void BlockedMover()
+        {
+            MessageBox.Show("You submitted a illegal move. Your piece is blocked!", "Invalid move", MessageBoxButton.OK);
+
+            MoveReseter();
+        }
+
+        public void TurnMover()
+        {
+            MessageBox.Show("You submitted a illegal move. It is not your turn!", "Invalid move", MessageBoxButton.OK);
+
+            MoveReseter();
+        }
+        #endregion
+
+        #region Grid numbering fixers
+        public int PlaceholdersFixer(int model)
+        {
+            if (model > 0)
+            {
+                model = model - 1;
+            }
+
+            else if (model < 0)
+            {
+                model = model + 1;
+            }
+
+            return model;
+        }
+
+        public int IncrementWorker(int model)
+        {
+            if (model > 0)
+            {
+                model--;
+            }
+
+            else if (model < 0)
+            {
+                model++;
+            }
+
+            return model;
+        }
+        #endregion 
     }
 }
 

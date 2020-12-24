@@ -7,7 +7,7 @@ namespace ChessLibrary.Interfaces
 {
     public interface IMoves
     {
-        bool PawnMove(Piece model, int previousColumnModel, int previousRowMOdel, int nextColumnModel, int nextRowModel, bool validBool);
+        bool PawnMove(Piece modelPrevious, Piece modelNext, int previousColumnModel, int previousRowMOdel, int nextColumnModel, int nextRowModel, bool validBool);
 
         bool RookMove(Piece model, int previousColumnModel, int previousRowMOdel, int nextColumnModel, int nextRowModel, bool validBool);
 

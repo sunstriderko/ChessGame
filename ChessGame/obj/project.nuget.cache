@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "In46ixtrSiwiVAFs8q7M8oV9iJbVwPj1+fXNDju+mqnhgUDUkpUTr1jDzU0JsWqdW1b3GfC6KlDiSvDRpxz5HA==",
+  "dgSpecHash": "3Ct6x8TchFjYh1tUEZSx4FJpjOE8vhGhx3FaKPQTfUrQLLzP2TsRNS2lb30biJwYk+XwxmvzlsT/bIbrDaMdTg==",
   "success": true,
   "projectFilePath": "C:\\Users\\adamc\\source\\repos\\ChessGame\\ChessGame\\ChessGame.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\adamc\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
     "C:\\Users\\adamc\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
-    "C:\\Users\\adamc\\.nuget\\packages\\system.drawing.common\\5.0.0\\system.drawing.common.5.0.0.nupkg.sha512"
+    "C:\\Users\\adamc\\.nuget\\packages\\system.drawing.common\\5.0.0\\system.drawing.common.5.0.0.nupkg.sha512",
+    "C:\\Users\\adamc\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
+    "C:\\Users\\adamc\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.10\\microsoft.netcore.app.host.win-x64.3.1.10.nupkg.sha512"
   ],
   "logs": []
 }

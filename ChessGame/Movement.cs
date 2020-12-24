@@ -36,7 +36,7 @@ namespace ChessGame
                 validBool = true;
             }
 
-            else if ((previousRow == nextRow) && (previousColumn == nextColumn + 1 || previousColumn == nextColumn + 1))
+            else if ((previousRow == nextRow) && (previousColumn == nextColumn + 1 || previousColumn == nextColumn - 1))
             {
                 validBool = true;
             }
@@ -68,11 +68,26 @@ namespace ChessGame
             return validBool;
         }
 
-        public bool PawnMove(Piece model, int previousColumn, int previousRow, int nextColumn, int nextRow, bool validBool)
+        public bool PawnMove(Piece modelPrevious, Piece modelNext, int previousColumn, int previousRow, int nextColumn, int nextRow, bool validBool) 
         {
-            if (model.PieceColor == PieceColors.White)
+            if (modelPrevious.PieceColor == PieceColors.White)
             {
-                if ((previousColumn == nextColumn) && (previousRow == nextRow - 1))
+                if ((modelNext.PieceColor == PieceColors.Black) && (previousColumn == nextColumn))
+                {
+                    validBool = false;
+                }
+
+                else if ((modelNext.PieceColor == PieceColors.Black) && (previousRow == nextRow - 1) && (previousColumn == nextColumn + 1 || previousColumn == nextColumn - 1))
+                {
+                    validBool = true;
+                }
+
+                else if ((previousColumn == nextColumn) && (previousRow == nextRow - 2) && previousRow == 1)
+                {
+                    validBool = true;
+                }
+
+                else if ((previousColumn == nextColumn) && (previousRow == nextRow - 1))
                 {
                     validBool = true;
                 }
@@ -83,9 +98,24 @@ namespace ChessGame
                 }
             }
 
-            else if (model.PieceColor == PieceColors.Black)
+            else if (modelPrevious.PieceColor == PieceColors.Black)
             {
-                if ((previousColumn == nextColumn) && (previousRow == nextRow + 1))
+                if ((modelNext.PieceColor == PieceColors.White) && (previousColumn == nextColumn))
+                {
+                    validBool = false;
+                }
+
+                else if ((modelNext.PieceColor == PieceColors.White) && (previousRow == nextRow + 1) && (previousColumn == nextColumn + 1 || previousColumn == nextColumn - 1))
+                {
+                    validBool = true;
+                }
+
+                else if ((previousColumn == nextColumn) && (previousRow == nextRow + 2) && previousRow == 6)
+                {
+                    validBool = true;
+                }
+
+                else if ((previousColumn == nextColumn) && (previousRow == nextRow + 1))
                 {
                     validBool = true;
                 }
@@ -140,7 +170,7 @@ namespace ChessGame
             {
                 if (previousPiece.PieceType == PieceTypes.Pawn)
                 {
-                    validation = PawnMove(previousPiece, previousColumn, previousRow, nextColumn, nextRow, validation);
+                    validation = PawnMove(previousPiece, nextPiece, previousColumn, previousRow, nextColumn, nextRow, validation);
                 }
 
                 else if (previousPiece.PieceType == PieceTypes.Rook)
@@ -166,7 +196,7 @@ namespace ChessGame
                 else if (previousPiece.PieceType == PieceTypes.Knight)
                 {
                     validation = KnightMove(previousPiece, previousColumn, previousRow, nextColumn, nextRow, validation);
-                }             
+                }
             }
             else
             {
