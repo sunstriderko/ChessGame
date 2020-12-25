@@ -54,7 +54,7 @@
 
         </Border>
 
-        <Border Grid.Column="0" Grid.Row="8" Background="#FF553208">
+        <Border x:Name="turnIndicatorBorder" Grid.Column="0" Grid.Row="8" Background="White">
 
         </Border>
 

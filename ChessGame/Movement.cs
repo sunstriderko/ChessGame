@@ -77,17 +77,17 @@ namespace ChessGame
                     validBool = false;
                 }
 
-                else if ((modelNext.PieceColor == PieceColors.Black) && (previousRow == nextRow - 1) && (previousColumn == nextColumn + 1 || previousColumn == nextColumn - 1))
+                else if ((modelNext.PieceColor == PieceColors.Black) && (previousRow == nextRow + 1) && (previousColumn == nextColumn + 1 || previousColumn == nextColumn - 1))
                 {
                     validBool = true;
                 }
 
-                else if ((previousColumn == nextColumn) && (previousRow == nextRow - 2) && previousRow == 1)
+                else if ((previousColumn == nextColumn) && (previousRow == nextRow + 2) && previousRow == 6)
                 {
                     validBool = true;
                 }
 
-                else if ((previousColumn == nextColumn) && (previousRow == nextRow - 1))
+                else if ((previousColumn == nextColumn) && (previousRow == nextRow + 1))
                 {
                     validBool = true;
                 }
@@ -105,17 +105,17 @@ namespace ChessGame
                     validBool = false;
                 }
 
-                else if ((modelNext.PieceColor == PieceColors.White) && (previousRow == nextRow + 1) && (previousColumn == nextColumn + 1 || previousColumn == nextColumn - 1))
+                else if ((modelNext.PieceColor == PieceColors.White) && (previousRow == nextRow - 1) && (previousColumn == nextColumn + 1 || previousColumn == nextColumn - 1))
                 {
                     validBool = true;
                 }
 
-                else if ((previousColumn == nextColumn) && (previousRow == nextRow + 2) && previousRow == 6)
+                else if ((previousColumn == nextColumn) && (previousRow == nextRow - 2) && previousRow == 1)
                 {
                     validBool = true;
                 }
 
-                else if ((previousColumn == nextColumn) && (previousRow == nextRow + 1))
+                else if ((previousColumn == nextColumn) && (previousRow == nextRow - 1))
                 {
                     validBool = true;
                 }

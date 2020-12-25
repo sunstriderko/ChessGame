@@ -49,5 +49,19 @@ namespace ChessGame.Builders
             }
             return model;
         }
+
+        public static Border TurnIndicator(Border model, int modelTurnCounter)
+        {
+            if (modelTurnCounter % 2 == 0)
+            {
+                model.Background = Brushes.Black;
+            }
+            else
+            {
+                model.Background = Brushes.White;
+            }
+
+            return model;
+        }
     }
 }
