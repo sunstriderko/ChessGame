@@ -6,6 +6,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ChessLibrary.Models;
 using ChessLibrary.Interfaces;
+using System.Linq;
+using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace ChessGame
 {
@@ -34,7 +37,10 @@ namespace ChessGame
         Piece[,] myBoard = new Piece[,] { };
         Button buttonClickOne;
         Button buttonClickTwo;
+        Button castleButtonOne;
+        Button castleButtonTwo;
         int pressLeftMouseButton;
+        int pressRightMouseButton;
         int previousColumn;
         int previousRow;
         int nextColumn;
@@ -47,6 +53,7 @@ namespace ChessGame
         int placeholderRow;
         int turnCounter = 1;
         bool turnCheck;
+        bool castleCheck;
         #endregion
 
         public MainWindow()
@@ -190,6 +197,7 @@ namespace ChessGame
 
                     but.Background = Brushes.Transparent;
                     but.Click += new RoutedEventHandler(Button_Click);
+                    but.MouseRightButtonUp += new MouseButtonEventHandler(RightButton_Click);
                     MainGrid.Children.Add(but);
                     Grid.SetColumn(but, j + 1);
                     Grid.SetRow(but, i);
@@ -198,6 +206,19 @@ namespace ChessGame
 
         }
         #endregion
+
+        public void RightButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (pressRightMouseButton < 1)
+            {
+                castleButtonOne = (Button)sender;
+                pressRightMouseButton++;
+            }
+            else
+            {
+                castleButtonTwo = (Button)sender;
+            }
+        }
 
         public void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -222,8 +243,7 @@ namespace ChessGame
                 Movement mov = new Movement();
 
                 validMove = mov.ValidMoveChecker(validMove, previousPiece, nextPiece, previousColumn, previousRow, nextColumn, nextRow);
-                
-                
+                                
                 if (validMove)
                 {
                     turnCheck = TurnChecker(previousPiece);
@@ -234,25 +254,37 @@ namespace ChessGame
 
                         if (blockCheck)
                         {
-                            nextPiece.PieceType = previousPiece.PieceType;
-                            nextPiece.PieceColor = previousPiece.PieceColor;
-                            myBoard[nextRow, nextColumn].PieceType = previousPiece.PieceType;
-                            myBoard[nextRow, nextColumn].PieceColor = previousPiece.PieceColor;
+                            castleCheck = CastlingChecker(previousPiece, myBoard[7, 0], myBoard[7, 7], myBoard[0, 0], myBoard[0, 7], previousColumn, nextColumn);
 
-                            PieceReplacer(nextPiece, buttonClickTwo);
+                            if (castleCheck)
+                            {
+                                nextPiece.PieceType = previousPiece.PieceType;
+                                nextPiece.PieceColor = previousPiece.PieceColor;
+                                myBoard[nextRow, nextColumn].PieceType = previousPiece.PieceType;
+                                myBoard[nextRow, nextColumn].PieceColor = previousPiece.PieceColor;
+                                myBoard[nextRow, nextColumn].PieceMoveCounter++;
 
-                            previousPiece.PieceType = PieceTypes.Free;
-                            previousPiece.PieceColor = PieceColors.None;
-                            myBoard[previousRow, previousColumn].PieceType = PieceTypes.Free;
-                            myBoard[previousRow, previousColumn].PieceColor = PieceColors.None;
+                                PieceReplacer(nextPiece, buttonClickTwo);
 
-                            PieceReplacer(previousPiece, buttonClickOne);
+                                previousPiece.PieceType = PieceTypes.Free;
+                                previousPiece.PieceColor = PieceColors.None;
+                                myBoard[previousRow, previousColumn].PieceType = PieceTypes.Free;
+                                myBoard[previousRow, previousColumn].PieceColor = PieceColors.None;
 
-                            turnCounter++;
 
-                            TurnHelper(turnIndicatorBorder, turnCounter);
+                                PieceReplacer(previousPiece, buttonClickOne);
 
-                            MoveReseter();
+                                turnCounter++;
+
+                                TurnHelper(turnIndicatorBorder, turnCounter);
+
+                                MoveReseter();
+                            }
+
+                            else
+                            {
+                                CastleMover();
+                            }
                         }
 
                         else
@@ -394,9 +426,12 @@ namespace ChessGame
         public void MoveReseter()
         {
             pressLeftMouseButton = 0;
+            pressRightMouseButton = 0;
             buttonClickOne.Background = Brushes.Transparent;
             buttonClickOne = null;
             buttonClickTwo = null;
+            castleButtonOne = null;
+            castleButtonTwo = null;
             blockCheck = true;
 
             previousColumn = 0;
@@ -500,6 +535,7 @@ namespace ChessGame
                 return false;
             }
         }
+
         #endregion
 
         #region Invalid moves messengers
@@ -520,6 +556,13 @@ namespace ChessGame
         public void TurnMover()
         {
             MessageBox.Show("You submitted a illegal move. It is not your turn!", "Invalid move", MessageBoxButton.OK);
+
+            MoveReseter();
+        }
+
+        public void CastleMover()
+        {
+            MessageBox.Show("You submitted a illegal move. Castling in this form is not allowed anymore!", "Invalid move", MessageBoxButton.OK);
 
             MoveReseter();
         }
@@ -565,6 +608,114 @@ namespace ChessGame
         public void TurnHelper(Border modelBorder, int modelCounter)
         {
             turnIndicatorBorder = GridBuilder.TurnIndicator(modelBorder, modelCounter);  
+        }
+
+        public bool CastlingChecker(Piece model, Piece modelWhiteRookLeft, Piece modelWhiteRookRight, Piece modelBlackRookLeft, Piece modelBlackRookRight, int modelPreviousColumn, int modelNextColumn)
+        {
+            if (model.PieceType == PieceTypes.King && (previousColumn == nextColumn + 2 || previousColumn == nextColumn - 2))
+            {
+                if (model.PieceColor == PieceColors.White)
+                {
+                    if (modelWhiteRookLeft.PieceType == PieceTypes.Rook && modelWhiteRookLeft.PieceMoveCounter == 0 && modelPreviousColumn == modelNextColumn + 2)
+                    {
+                        if (castleButtonOne != null && castleButtonTwo != null && Grid.GetColumn(castleButtonTwo) == 3 && Grid.GetRow(castleButtonTwo) == 7)
+                        {
+                            myBoard[7, 0].PieceColor = PieceColors.None;
+                            myBoard[7, 0].PieceType = PieceTypes.Free;
+                            myBoard[7, 2].PieceType = PieceTypes.Rook;
+                            myBoard[7, 2].PieceColor = PieceColors.White;
+                            PieceReplacer(myBoard[7, 2], castleButtonTwo);
+                            PieceReplacer(myBoard[7, 0], castleButtonOne);
+
+                            castleCheck = true;
+                        }
+
+                        else
+                        {
+                            castleCheck = false;
+                        }
+                    }
+
+                    else if (modelWhiteRookRight.PieceType == PieceTypes.Rook && modelWhiteRookRight.PieceMoveCounter == 0 && modelPreviousColumn == modelNextColumn - 2)
+                    {                       
+                        if (castleButtonOne != null && castleButtonTwo != null && myBoard[7, 6].PieceType == PieceTypes.Free && Grid.GetColumn(castleButtonTwo) == 5 && Grid.GetRow(castleButtonTwo) == 7)
+                        {
+                            myBoard[7, 7].PieceColor = PieceColors.None;
+                            myBoard[7, 7].PieceType = PieceTypes.Free;
+                            myBoard[7, 4].PieceType = PieceTypes.Rook;
+                            myBoard[7, 4].PieceColor = PieceColors.White;
+                            PieceReplacer(myBoard[7, 4], castleButtonTwo);
+                            PieceReplacer(myBoard[7, 7], castleButtonOne);
+
+                            castleCheck = true;
+                        }
+
+                        else
+                        {
+                            castleCheck = false;
+                        }
+                    }
+
+                    else
+                    {
+                        castleCheck = false;
+                    }
+                }
+
+                else if (model.PieceColor == PieceColors.Black)
+                {
+                    if (modelBlackRookLeft.PieceType == PieceTypes.Rook && modelBlackRookLeft.PieceMoveCounter == 0 && modelPreviousColumn == modelNextColumn +2)
+                    {                       
+                        if (castleButtonOne != null && castleButtonTwo != null && Grid.GetColumn(castleButtonTwo) == 3 && Grid.GetRow(castleButtonTwo) == 0)
+                        {
+                            myBoard[0, 0].PieceColor = PieceColors.None;
+                            myBoard[0, 0].PieceType = PieceTypes.Free;
+                            myBoard[0, 2].PieceType = PieceTypes.Rook;
+                            myBoard[0, 2].PieceColor = PieceColors.Black;
+                            PieceReplacer(myBoard[0, 2], castleButtonTwo);
+                            PieceReplacer(myBoard[0, 0], castleButtonOne);
+
+                            castleCheck = true;
+                        }
+                        else
+                        {
+                            castleCheck = false;
+                        }
+                    }
+
+                    else if (modelBlackRookRight.PieceType == PieceTypes.Rook && modelBlackRookRight.PieceMoveCounter == 0 && modelPreviousColumn == modelNextColumn - 2)
+                    {
+                        if (castleButtonOne != null && castleButtonTwo != null && myBoard[0, 6].PieceType == PieceTypes.Free && Grid.GetColumn(castleButtonTwo) == 5 && Grid.GetRow(castleButtonTwo) == 0)
+                        {
+                            myBoard[0, 7].PieceColor = PieceColors.None;
+                            myBoard[0, 7].PieceType = PieceTypes.Free;
+                            myBoard[0, 4].PieceType = PieceTypes.Rook;
+                            myBoard[0, 4].PieceColor = PieceColors.Black;
+                            PieceReplacer(myBoard[0, 4], castleButtonTwo);
+                            PieceReplacer(myBoard[0, 7], castleButtonOne);
+
+                            castleCheck = true;
+                        }
+
+                        else
+                        {
+                            castleCheck = false;
+                        }
+                    }
+
+                    else
+                    {
+                        castleCheck = false;
+                    }
+                }
+            }
+
+            else
+            {
+                castleCheck = true;
+            }
+
+            return castleCheck;
         }
     }
 }

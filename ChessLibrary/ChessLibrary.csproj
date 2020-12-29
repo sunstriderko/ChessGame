@@ -5,8 +5,4 @@
 	
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Pieces\" />
-  </ItemGroup>
-
 </Project>

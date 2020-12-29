@@ -41,6 +41,11 @@ namespace ChessGame
                 validBool = true;
             }
 
+            else if (model.PieceMoveCounter == 0 && previousRow == nextRow && (previousColumn == nextColumn + 2 || previousColumn == nextColumn - 2))
+            {
+                validBool = true;
+            }
+
             else
             {
                 validBool = false;
@@ -166,7 +171,7 @@ namespace ChessGame
 
         public bool ValidMoveChecker(bool validation, Piece previousPiece, Piece nextPiece, int previousColumn, int previousRow, int nextColumn, int nextRow)
         {
-            if ((previousPiece.PieceColor != nextPiece.PieceColor) && (previousPiece.PieceType != PieceTypes.Free))
+            if (previousPiece.PieceColor != nextPiece.PieceColor  && previousPiece.PieceType != PieceTypes.Free)
             {
                 if (previousPiece.PieceType == PieceTypes.Pawn)
                 {

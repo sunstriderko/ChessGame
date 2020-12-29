@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessGame"
         mc:Ignorable="d"
-        Title="Chess Game" Height="855" Width="855" ResizeMode="NoResize">
+        Title="Chess Game" Height="855" Width="855" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 
     <Grid x:Name="MainGrid">
 
@@ -124,6 +124,5 @@
         <TextBlock Text="1" Grid.Row="7" Grid.Column="0">
 
         </TextBlock>
-
     </Grid>
 </Window>
