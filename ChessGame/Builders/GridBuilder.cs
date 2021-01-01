@@ -26,10 +26,12 @@ namespace ChessGame.Builders
                     {
                         fillColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFF0C587"));
                     }
+
                     else
                     {
                         fillColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF553208"));
                     }
+
                     Rectangle rectangle = new Rectangle()
                     {
                         Width = width,
@@ -38,10 +40,8 @@ namespace ChessGame.Builders
                         StrokeThickness = 0,
                         Fill = fillColor,
                         Name = $"pos{i}{j}",
-
                     };
-
-                   
+        
                     model.Children.Add(rectangle);
                     Grid.SetColumn(rectangle, j);
                     Grid.SetRow(rectangle, i);

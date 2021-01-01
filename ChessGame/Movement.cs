@@ -97,6 +97,11 @@ namespace ChessGame
                     validBool = true;
                 }
 
+                else if ((previousColumn == nextColumn + 1 || previousColumn == nextColumn - 1) && nextRow == 2)
+                {
+                    validBool = true;
+                }
+
                 else
                 {
                     validBool = false;
@@ -121,6 +126,11 @@ namespace ChessGame
                 }
 
                 else if ((previousColumn == nextColumn) && (previousRow == nextRow - 1))
+                {
+                    validBool = true;
+                }
+
+                else if ((previousColumn == nextColumn + 1 || previousColumn == nextColumn - 1) && nextRow == 5)
                 {
                     validBool = true;
                 }
@@ -207,6 +217,7 @@ namespace ChessGame
             {
                 validation = false;
             }
+
             return validation;
         }
     }
