@@ -8,6 +8,7 @@ using ChessLibrary.Models;
 using System.Windows.Input;
 using System.Collections.Generic;
 using System.Linq;
+using ChessLibrary.Enums;
 
 namespace ChessGame
 {
@@ -82,16 +83,16 @@ namespace ChessGame
                     but.Height = 100;
                     but.Width = 100;
 
-                    if (myBoard[i, j].PieceType == PieceTypes.Pawn)
+                    if (myBoard[i, j].PieceType == PieceType.Pawn)
                     {
-                        if (myBoard[i, j].PieceColor == PieceColors.White)
+                        if (myBoard[i, j].PieceColor == PieceColor.White)
                         {
                             but.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(pawnImageWhite)),
                             };
                         }
-                        else if (myBoard[i, j].PieceColor == PieceColors.Black)
+                        else if (myBoard[i, j].PieceColor == PieceColor.Black)
                         {
                             but.Content = new Image
                             {
@@ -100,16 +101,16 @@ namespace ChessGame
                         }
                     }
 
-                    else if (myBoard[i, j].PieceType == PieceTypes.Rook)
+                    else if (myBoard[i, j].PieceType == PieceType.Rook)
                     {
-                        if (myBoard[i, j].PieceColor == PieceColors.White)
+                        if (myBoard[i, j].PieceColor == PieceColor.White)
                         {
                             but.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(rookImageWhite)),
                             };
                         }
-                        else if (myBoard[i, j].PieceColor == PieceColors.Black)
+                        else if (myBoard[i, j].PieceColor == PieceColor.Black)
                         {
                             but.Content = new Image
                             {
@@ -118,16 +119,16 @@ namespace ChessGame
                         }
                     }
 
-                    else if (myBoard[i, j].PieceType == PieceTypes.Bishop)
+                    else if (myBoard[i, j].PieceType == PieceType.Bishop)
                     {
-                        if (myBoard[i, j].PieceColor == PieceColors.White)
+                        if (myBoard[i, j].PieceColor == PieceColor.White)
                         {
                             but.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(bishopImageWhite)),
                             };
                         }
-                        else if (myBoard[i, j].PieceColor == PieceColors.Black)
+                        else if (myBoard[i, j].PieceColor == PieceColor.Black)
                         {
                             but.Content = new Image
                             {
@@ -136,16 +137,16 @@ namespace ChessGame
                         }
                     }
 
-                    else if (myBoard[i, j].PieceType == PieceTypes.Knight)
+                    else if (myBoard[i, j].PieceType == PieceType.Knight)
                     {
-                        if (myBoard[i, j].PieceColor == PieceColors.White)
+                        if (myBoard[i, j].PieceColor == PieceColor.White)
                         {
                             but.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(knightImageWhite)),
                             };
                         }
-                        else if (myBoard[i, j].PieceColor == PieceColors.Black)
+                        else if (myBoard[i, j].PieceColor == PieceColor.Black)
                         {
                             but.Content = new Image
                             {
@@ -154,16 +155,16 @@ namespace ChessGame
                         }
                     }
 
-                    else if (myBoard[i, j].PieceType == PieceTypes.Queen)
+                    else if (myBoard[i, j].PieceType == PieceType.Queen)
                     {
-                        if (myBoard[i, j].PieceColor == PieceColors.White)
+                        if (myBoard[i, j].PieceColor == PieceColor.White)
                         {
                             but.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(queenImageWhite)),
                             };
                         }
-                        else if (myBoard[i, j].PieceColor == PieceColors.Black)
+                        else if (myBoard[i, j].PieceColor == PieceColor.Black)
                         {
                             but.Content = new Image
                             {
@@ -172,16 +173,16 @@ namespace ChessGame
                         }
                     }
 
-                    else if (myBoard[i, j].PieceType == PieceTypes.King)
+                    else if (myBoard[i, j].PieceType == PieceType.King)
                     {
-                        if (myBoard[i, j].PieceColor == PieceColors.White)
+                        if (myBoard[i, j].PieceColor == PieceColor.White)
                         {
                             but.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(kingImageWhite)),
                             };
                         }
-                        else if (myBoard[i, j].PieceColor == PieceColors.Black)
+                        else if (myBoard[i, j].PieceColor == PieceColor.Black)
                         {
                             but.Content = new Image
                             {
@@ -203,14 +204,14 @@ namespace ChessGame
         public void VirtualBoardDeployer()
         {
             myBoard = new Piece[,] {
-                {new Piece(PieceTypes.Rook,PieceColors.Black),new Piece(PieceTypes.Knight,PieceColors.Black), new Piece(PieceTypes.Bishop,PieceColors.Black),new Piece(PieceTypes.King,PieceColors.Black), new Piece(PieceTypes.Queen,PieceColors.Black), new Piece(PieceTypes.Bishop,PieceColors.Black), new Piece(PieceTypes.Knight,PieceColors.Black), new Piece(PieceTypes.Rook,PieceColors.Black) },
-                {new Piece(PieceTypes.Pawn,PieceColors.Black), new Piece(PieceTypes.Pawn,PieceColors.Black), new Piece(PieceTypes.Pawn,PieceColors.Black), new Piece(PieceTypes.Pawn,PieceColors.Black), new Piece(PieceTypes.Pawn,PieceColors.Black), new Piece(PieceTypes.Pawn,PieceColors.Black), new Piece(PieceTypes.Pawn,PieceColors.Black), new Piece(PieceTypes.Pawn,PieceColors.Black) },
-                {new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None) },
-                {new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None) },
-                {new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None) },
-                {new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None), new Piece(PieceTypes.Free,PieceColors.None) },
-                {new Piece(PieceTypes.Pawn,PieceColors.White), new Piece(PieceTypes.Pawn,PieceColors.White), new Piece(PieceTypes.Pawn,PieceColors.White), new Piece(PieceTypes.Pawn,PieceColors.White), new Piece(PieceTypes.Pawn,PieceColors.White), new Piece(PieceTypes.Pawn,PieceColors.White), new Piece(PieceTypes.Pawn,PieceColors.White), new Piece(PieceTypes.Pawn,PieceColors.White) },
-                {new Piece(PieceTypes.Rook,PieceColors.White),new Piece(PieceTypes.Knight,PieceColors.White), new Piece(PieceTypes.Bishop,PieceColors.White),new Piece(PieceTypes.King,PieceColors.White), new Piece(PieceTypes.Queen,PieceColors.White), new Piece(PieceTypes.Bishop,PieceColors.White), new Piece(PieceTypes.Knight,PieceColors.White), new Piece(PieceTypes.Rook,PieceColors.White) },
+                {new Piece(PieceType.Rook,PieceColor.Black),new Piece(PieceType.Knight,PieceColor.Black), new Piece(PieceType.Bishop,PieceColor.Black),new Piece(PieceType.King,PieceColor.Black), new Piece(PieceType.Queen,PieceColor.Black), new Piece(PieceType.Bishop,PieceColor.Black), new Piece(PieceType.Knight,PieceColor.Black), new Piece(PieceType.Rook,PieceColor.Black) },
+                {new Piece(PieceType.Pawn,PieceColor.Black), new Piece(PieceType.Pawn,PieceColor.Black), new Piece(PieceType.Pawn,PieceColor.Black), new Piece(PieceType.Pawn,PieceColor.Black), new Piece(PieceType.Pawn,PieceColor.Black), new Piece(PieceType.Pawn,PieceColor.Black), new Piece(PieceType.Pawn,PieceColor.Black), new Piece(PieceType.Pawn,PieceColor.Black) },
+                {new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None) },
+                {new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None) },
+                {new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None) },
+                {new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None) },
+                {new Piece(PieceType.Pawn,PieceColor.White), new Piece(PieceType.Pawn,PieceColor.White), new Piece(PieceType.Pawn,PieceColor.White), new Piece(PieceType.Pawn,PieceColor.White), new Piece(PieceType.Pawn,PieceColor.White), new Piece(PieceType.Pawn,PieceColor.White), new Piece(PieceType.Pawn,PieceColor.White), new Piece(PieceType.Pawn,PieceColor.White) },
+                {new Piece(PieceType.Rook,PieceColor.White),new Piece(PieceType.Knight,PieceColor.White), new Piece(PieceType.Bishop,PieceColor.White),new Piece(PieceType.King,PieceColor.White), new Piece(PieceType.Queen,PieceColor.White), new Piece(PieceType.Bishop,PieceColor.White), new Piece(PieceType.Knight,PieceColor.White), new Piece(PieceType.Rook,PieceColor.White) },
             };
         }
         #endregion
@@ -279,10 +280,10 @@ namespace ChessGame
 
                                     PieceReplacer(nextPiece, buttonClickTwo);
 
-                                    previousPiece.PieceType = PieceTypes.Free;
-                                    previousPiece.PieceColor = PieceColors.None;
-                                    myBoard[previousRow, previousColumn].PieceType = PieceTypes.Free;
-                                    myBoard[previousRow, previousColumn].PieceColor = PieceColors.None;
+                                    previousPiece.PieceType = PieceType.Free;
+                                    previousPiece.PieceColor = PieceColor.None;
+                                    myBoard[previousRow, previousColumn].PieceType = PieceType.Free;
+                                    myBoard[previousRow, previousColumn].PieceColor = PieceColor.None;
 
                                     lastTurn = nextPiece;
 
@@ -330,16 +331,16 @@ namespace ChessGame
         #region Pieces/Turn successed
         public void PieceReplacer(Piece model, Button modelButton)
         {
-            if (model.PieceType == PieceTypes.Pawn)
+            if (model.PieceType == PieceType.Pawn)
             {
-                if (model.PieceColor == PieceColors.White)
+                if (model.PieceColor == PieceColor.White)
                 {
                     modelButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(pawnImageWhite)),
                     };
                 }
-                else if (model.PieceColor == PieceColors.Black)
+                else if (model.PieceColor == PieceColor.Black)
                 {
                     modelButton.Content = new Image
                     {
@@ -348,16 +349,16 @@ namespace ChessGame
                 }
             }
 
-            else if (model.PieceType == PieceTypes.Rook)
+            else if (model.PieceType == PieceType.Rook)
             {
-                if (model.PieceColor == PieceColors.White)
+                if (model.PieceColor == PieceColor.White)
                 {
                     modelButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(rookImageWhite)),
                     };
                 }
-                else if (model.PieceColor == PieceColors.Black)
+                else if (model.PieceColor == PieceColor.Black)
                 {
                     modelButton.Content = new Image
                     {
@@ -366,16 +367,16 @@ namespace ChessGame
                 }
             }
 
-            else if (model.PieceType == PieceTypes.Bishop)
+            else if (model.PieceType == PieceType.Bishop)
             {
-                if (model.PieceColor == PieceColors.White)
+                if (model.PieceColor == PieceColor.White)
                 {
                     modelButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(bishopImageWhite)),
                     };
                 }
-                else if (model.PieceColor == PieceColors.Black)
+                else if (model.PieceColor == PieceColor.Black)
                 {
                     modelButton.Content = new Image
                     {
@@ -384,16 +385,16 @@ namespace ChessGame
                 }
             }
 
-            else if (model.PieceType == PieceTypes.Knight)
+            else if (model.PieceType == PieceType.Knight)
             {
-                if (model.PieceColor == PieceColors.White)
+                if (model.PieceColor == PieceColor.White)
                 {
                     modelButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(knightImageWhite)),
                     };
                 }
-                else if (model.PieceColor == PieceColors.Black)
+                else if (model.PieceColor == PieceColor.Black)
                 {
                     modelButton.Content = new Image
                     {
@@ -402,16 +403,16 @@ namespace ChessGame
                 }
             }
 
-            else if (model.PieceType == PieceTypes.Queen)
+            else if (model.PieceType == PieceType.Queen)
             {
-                if (model.PieceColor == PieceColors.White)
+                if (model.PieceColor == PieceColor.White)
                 {
                     modelButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(queenImageWhite)),
                     };
                 }
-                else if (model.PieceColor == PieceColors.Black)
+                else if (model.PieceColor == PieceColor.Black)
                 {
                     modelButton.Content = new Image
                     {
@@ -420,16 +421,16 @@ namespace ChessGame
                 }
             }
 
-            else if (model.PieceType == PieceTypes.King)
+            else if (model.PieceType == PieceType.King)
             {
-                if (model.PieceColor == PieceColors.White)
+                if (model.PieceColor == PieceColor.White)
                 {
                     modelButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(kingImageWhite)),
                     };
                 }
-                else if (model.PieceColor == PieceColors.Black)
+                else if (model.PieceColor == PieceColor.Black)
                 {
                     modelButton.Content = new Image
                     {
@@ -438,7 +439,7 @@ namespace ChessGame
                 }
             }
 
-            else if (model.PieceType == PieceTypes.Free)
+            else if (model.PieceType == PieceType.Free)
             {
                 modelButton.Content = new Image { };
             }
@@ -474,7 +475,7 @@ namespace ChessGame
             placeholderRow = PlaceholdersFixer(placeholderRow);
             placeholderColumn = PlaceholdersFixer(placeholderColumn);
 
-            if (modelPiece.PieceType == PieceTypes.Knight)
+            if (modelPiece.PieceType == PieceType.Knight)
             {
                 return true;
             }
@@ -484,7 +485,7 @@ namespace ChessGame
                 for (int i = placeholderColumn; i != 0; i = IncrementWorker(i))
                 {
 
-                    if (myBoard[previousModelRow, previousModelColumn - i].PieceType != PieceTypes.Free)
+                    if (myBoard[previousModelRow, previousModelColumn - i].PieceType != PieceType.Free)
                     {
                         blockCheck = false;
                         break;
@@ -502,7 +503,7 @@ namespace ChessGame
                 for (int i = placeholderRow; i != 0; i = IncrementWorker(i))
                 {
 
-                    if (myBoard[previousModelRow - i, previousModelColumn].PieceType != PieceTypes.Free)
+                    if (myBoard[previousModelRow - i, previousModelColumn].PieceType != PieceType.Free)
                     {
                         blockCheck = false;
                         break;
@@ -520,7 +521,7 @@ namespace ChessGame
                 int j = placeholderColumn;
                 for (int i = placeholderRow; i != 0; i = IncrementWorker(i))
                 {
-                    if (myBoard[previousModelRow - i, previousModelColumn - j].PieceType != PieceTypes.Free)
+                    if (myBoard[previousModelRow - i, previousModelColumn - j].PieceType != PieceType.Free)
                     {
                         blockCheck = false;
                         break;
@@ -539,12 +540,12 @@ namespace ChessGame
 
         public bool TurnChecker(Piece model)
         {
-            if (turnCounter % 2 != 0 && model.PieceColor == PieceColors.White)
+            if (turnCounter % 2 != 0 && model.PieceColor == PieceColor.White)
             {
                 return true;
             }
 
-            else if (turnCounter % 2 == 0 && model.PieceColor == PieceColors.Black)
+            else if (turnCounter % 2 == 0 && model.PieceColor == PieceColor.Black)
             {
                 return true;
             }
@@ -639,18 +640,18 @@ namespace ChessGame
         //maybe re-do CastleChecker with searching function + loop with is
         public bool CastlingChecker(Piece model, Piece modelWhiteRookLeft, Piece modelWhiteRookRight, Piece modelBlackRookLeft, Piece modelBlackRookRight, int modelPreviousColumn, int modelNextColumn)
         {
-            if (model.PieceType == PieceTypes.King && (previousColumn == nextColumn + 2 || previousColumn == nextColumn - 2))
+            if (model.PieceType == PieceType.King && (previousColumn == nextColumn + 2 || previousColumn == nextColumn - 2))
             {
-                if (model.PieceColor == PieceColors.White)
+                if (model.PieceColor == PieceColor.White)
                 {
-                    if (modelWhiteRookLeft.PieceType == PieceTypes.Rook && modelWhiteRookLeft.PieceMoveCounter == 0 && modelPreviousColumn == modelNextColumn + 2)
+                    if (modelWhiteRookLeft.PieceType == PieceType.Rook && modelWhiteRookLeft.PieceMoveCounter == 0 && modelPreviousColumn == modelNextColumn + 2)
                     {
                         if (castleButtonOne != null && castleButtonTwo != null && Grid.GetColumn(castleButtonTwo) == 3 && Grid.GetRow(castleButtonTwo) == 7)
                         {
-                            myBoard[7, 0].PieceColor = PieceColors.None;
-                            myBoard[7, 0].PieceType = PieceTypes.Free;
-                            myBoard[7, 2].PieceType = PieceTypes.Rook;
-                            myBoard[7, 2].PieceColor = PieceColors.White;
+                            myBoard[7, 0].PieceColor = PieceColor.None;
+                            myBoard[7, 0].PieceType = PieceType.Free;
+                            myBoard[7, 2].PieceType = PieceType.Rook;
+                            myBoard[7, 2].PieceColor = PieceColor.White;
                             PieceReplacer(myBoard[7, 2], castleButtonTwo);
                             PieceReplacer(myBoard[7, 0], castleButtonOne);
 
@@ -663,14 +664,14 @@ namespace ChessGame
                         }
                     }
 
-                    else if (modelWhiteRookRight.PieceType == PieceTypes.Rook && modelWhiteRookRight.PieceMoveCounter == 0 && modelPreviousColumn == modelNextColumn - 2)
+                    else if (modelWhiteRookRight.PieceType == PieceType.Rook && modelWhiteRookRight.PieceMoveCounter == 0 && modelPreviousColumn == modelNextColumn - 2)
                     {
-                        if (castleButtonOne != null && castleButtonTwo != null && myBoard[7, 6].PieceType == PieceTypes.Free && Grid.GetColumn(castleButtonTwo) == 5 && Grid.GetRow(castleButtonTwo) == 7)
+                        if (castleButtonOne != null && castleButtonTwo != null && myBoard[7, 6].PieceType == PieceType.Free && Grid.GetColumn(castleButtonTwo) == 5 && Grid.GetRow(castleButtonTwo) == 7)
                         {
-                            myBoard[7, 7].PieceColor = PieceColors.None;
-                            myBoard[7, 7].PieceType = PieceTypes.Free;
-                            myBoard[7, 4].PieceType = PieceTypes.Rook;
-                            myBoard[7, 4].PieceColor = PieceColors.White;
+                            myBoard[7, 7].PieceColor = PieceColor.None;
+                            myBoard[7, 7].PieceType = PieceType.Free;
+                            myBoard[7, 4].PieceType = PieceType.Rook;
+                            myBoard[7, 4].PieceColor = PieceColor.White;
                             PieceReplacer(myBoard[7, 4], castleButtonTwo);
                             PieceReplacer(myBoard[7, 7], castleButtonOne);
 
@@ -689,16 +690,16 @@ namespace ChessGame
                     }
                 }
 
-                else if (model.PieceColor == PieceColors.Black)
+                else if (model.PieceColor == PieceColor.Black)
                 {
-                    if (modelBlackRookLeft.PieceType == PieceTypes.Rook && modelBlackRookLeft.PieceMoveCounter == 0 && modelPreviousColumn == modelNextColumn + 2)
+                    if (modelBlackRookLeft.PieceType == PieceType.Rook && modelBlackRookLeft.PieceMoveCounter == 0 && modelPreviousColumn == modelNextColumn + 2)
                     {
                         if (castleButtonOne != null && castleButtonTwo != null && Grid.GetColumn(castleButtonTwo) == 3 && Grid.GetRow(castleButtonTwo) == 0)
                         {
-                            myBoard[0, 0].PieceColor = PieceColors.None;
-                            myBoard[0, 0].PieceType = PieceTypes.Free;
-                            myBoard[0, 2].PieceType = PieceTypes.Rook;
-                            myBoard[0, 2].PieceColor = PieceColors.Black;
+                            myBoard[0, 0].PieceColor = PieceColor.None;
+                            myBoard[0, 0].PieceType = PieceType.Free;
+                            myBoard[0, 2].PieceType = PieceType.Rook;
+                            myBoard[0, 2].PieceColor = PieceColor.Black;
                             PieceReplacer(myBoard[0, 2], castleButtonTwo);
                             PieceReplacer(myBoard[0, 0], castleButtonOne);
 
@@ -710,14 +711,14 @@ namespace ChessGame
                         }
                     }
 
-                    else if (modelBlackRookRight.PieceType == PieceTypes.Rook && modelBlackRookRight.PieceMoveCounter == 0 && modelPreviousColumn == modelNextColumn - 2)
+                    else if (modelBlackRookRight.PieceType == PieceType.Rook && modelBlackRookRight.PieceMoveCounter == 0 && modelPreviousColumn == modelNextColumn - 2)
                     {
-                        if (castleButtonOne != null && castleButtonTwo != null && myBoard[0, 6].PieceType == PieceTypes.Free && Grid.GetColumn(castleButtonTwo) == 5 && Grid.GetRow(castleButtonTwo) == 0)
+                        if (castleButtonOne != null && castleButtonTwo != null && myBoard[0, 6].PieceType == PieceType.Free && Grid.GetColumn(castleButtonTwo) == 5 && Grid.GetRow(castleButtonTwo) == 0)
                         {
-                            myBoard[0, 7].PieceColor = PieceColors.None;
-                            myBoard[0, 7].PieceType = PieceTypes.Free;
-                            myBoard[0, 4].PieceType = PieceTypes.Rook;
-                            myBoard[0, 4].PieceColor = PieceColors.Black;
+                            myBoard[0, 7].PieceColor = PieceColor.None;
+                            myBoard[0, 7].PieceType = PieceType.Free;
+                            myBoard[0, 4].PieceType = PieceType.Rook;
+                            myBoard[0, 4].PieceColor = PieceColor.Black;
                             PieceReplacer(myBoard[0, 4], castleButtonTwo);
                             PieceReplacer(myBoard[0, 7], castleButtonOne);
 
@@ -747,12 +748,12 @@ namespace ChessGame
 
         public bool EnPassantTakeChecker(Piece model, int modelPreviousColumn, int modelPreviousRow, int modelNextColumn, int modelNextRow)
         {
-            if (model.PieceType == PieceTypes.Pawn && ((modelPreviousColumn == modelNextColumn + 1) || (modelPreviousColumn == modelNextColumn - 1)))
+            if (model.PieceType == PieceType.Pawn && ((modelPreviousColumn == modelNextColumn + 1) || (modelPreviousColumn == modelNextColumn - 1)))
             {
-                if (model.PieceColor == PieceColors.White && modelPreviousRow == modelNextRow + 1 && myBoard[nextRow + 1,nextColumn] == lastTurn && lastTurn.PieceMoveCounter == 1 && lastTurn.PieceType == PieceTypes.Pawn)
+                if (model.PieceColor == PieceColor.White && modelPreviousRow == modelNextRow + 1 && myBoard[nextRow + 1,nextColumn] == lastTurn && lastTurn.PieceMoveCounter == 1 && lastTurn.PieceType == PieceType.Pawn)
                 {
-                    myBoard[nextRow + 1, nextColumn].PieceColor = PieceColors.None;
-                    myBoard[nextRow + 1, nextColumn].PieceType = PieceTypes.Free;
+                    myBoard[nextRow + 1, nextColumn].PieceColor = PieceColor.None;
+                    myBoard[nextRow + 1, nextColumn].PieceType = PieceType.Free;
 
                     Piece enPassantDead = myBoard[nextRow + 1, nextColumn];
                     
@@ -763,10 +764,10 @@ namespace ChessGame
                     return true;
                 }
 
-                else if (model.PieceColor == PieceColors.Black && modelPreviousRow == modelNextRow - 1 && myBoard[nextRow - 1, nextColumn] == lastTurn && lastTurn.PieceMoveCounter == 1 && lastTurn.PieceType == PieceTypes.Pawn)
+                else if (model.PieceColor == PieceColor.Black && modelPreviousRow == modelNextRow - 1 && myBoard[nextRow - 1, nextColumn] == lastTurn && lastTurn.PieceMoveCounter == 1 && lastTurn.PieceType == PieceType.Pawn)
                 {
-                    myBoard[nextRow - 1, nextColumn].PieceColor = PieceColors.None;
-                    myBoard[nextRow - 1, nextColumn].PieceType = PieceTypes.Free;
+                    myBoard[nextRow - 1, nextColumn].PieceColor = PieceColor.None;
+                    myBoard[nextRow - 1, nextColumn].PieceType = PieceType.Free;
 
                     Piece enPassantDead = myBoard[nextRow - 1, nextColumn];
 

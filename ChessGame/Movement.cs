@@ -4,6 +4,7 @@ using ChessLibrary.Interfaces;
 using ChessGame;
 using System.Windows;
 using System.Windows.Controls;
+using ChessLibrary.Enums;
 
 namespace ChessGame
 {
@@ -75,14 +76,14 @@ namespace ChessGame
 
         public bool PawnMove(Piece modelPrevious, Piece modelNext, int previousColumn, int previousRow, int nextColumn, int nextRow, bool validBool) 
         {
-            if (modelPrevious.PieceColor == PieceColors.White)
+            if (modelPrevious.PieceColor == PieceColor.White)
             {
-                if ((modelNext.PieceColor == PieceColors.Black) && (previousColumn == nextColumn))
+                if ((modelNext.PieceColor == PieceColor.Black) && (previousColumn == nextColumn))
                 {
                     validBool = false;
                 }
 
-                else if ((modelNext.PieceColor == PieceColors.Black) && (previousRow == nextRow + 1) && (previousColumn == nextColumn + 1 || previousColumn == nextColumn - 1))
+                else if ((modelNext.PieceColor == PieceColor.Black) && (previousRow == nextRow + 1) && (previousColumn == nextColumn + 1 || previousColumn == nextColumn - 1))
                 {
                     validBool = true;
                 }
@@ -108,14 +109,14 @@ namespace ChessGame
                 }
             }
 
-            else if (modelPrevious.PieceColor == PieceColors.Black)
+            else if (modelPrevious.PieceColor == PieceColor.Black)
             {
-                if ((modelNext.PieceColor == PieceColors.White) && (previousColumn == nextColumn))
+                if ((modelNext.PieceColor == PieceColor.White) && (previousColumn == nextColumn))
                 {
                     validBool = false;
                 }
 
-                else if ((modelNext.PieceColor == PieceColors.White) && (previousRow == nextRow - 1) && (previousColumn == nextColumn + 1 || previousColumn == nextColumn - 1))
+                else if ((modelNext.PieceColor == PieceColor.White) && (previousRow == nextRow - 1) && (previousColumn == nextColumn + 1 || previousColumn == nextColumn - 1))
                 {
                     validBool = true;
                 }
@@ -181,34 +182,34 @@ namespace ChessGame
 
         public bool ValidMoveChecker(bool validation, Piece previousPiece, Piece nextPiece, int previousColumn, int previousRow, int nextColumn, int nextRow)
         {
-            if (previousPiece.PieceColor != nextPiece.PieceColor  && previousPiece.PieceType != PieceTypes.Free)
+            if (previousPiece.PieceColor != nextPiece.PieceColor  && previousPiece.PieceType != PieceType.Free)
             {
-                if (previousPiece.PieceType == PieceTypes.Pawn)
+                if (previousPiece.PieceType == PieceType.Pawn)
                 {
                     validation = PawnMove(previousPiece, nextPiece, previousColumn, previousRow, nextColumn, nextRow, validation);
                 }
 
-                else if (previousPiece.PieceType == PieceTypes.Rook)
+                else if (previousPiece.PieceType == PieceType.Rook)
                 {
                     validation = RookMove(previousPiece, previousColumn, previousRow, nextColumn, nextRow, validation);
                 }
 
-                else if (previousPiece.PieceType == PieceTypes.Bishop)
+                else if (previousPiece.PieceType == PieceType.Bishop)
                 {
                     validation = BishopMove(previousPiece, previousColumn, previousRow, nextColumn, nextRow, validation);
                 }
 
-                else if (previousPiece.PieceType == PieceTypes.King)
+                else if (previousPiece.PieceType == PieceType.King)
                 {
                     validation = KingMove(previousPiece, previousColumn, previousRow, nextColumn, nextRow, validation);
                 }
 
-                else if (previousPiece.PieceType == PieceTypes.Queen)
+                else if (previousPiece.PieceType == PieceType.Queen)
                 {
                     validation = QueenMove(previousPiece, previousColumn, previousRow, nextColumn, nextRow, validation);
                 }
 
-                else if (previousPiece.PieceType == PieceTypes.Knight)
+                else if (previousPiece.PieceType == PieceType.Knight)
                 {
                     validation = KnightMove(previousPiece, previousColumn, previousRow, nextColumn, nextRow, validation);
                 }

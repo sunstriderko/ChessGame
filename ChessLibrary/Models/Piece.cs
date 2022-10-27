@@ -1,41 +1,21 @@
-﻿using System;
-using System.Windows;
-using System.Drawing;
-
-
-namespace ChessLibrary.Models
+﻿namespace ChessLibrary.Models
 {
-    public class Piece
+    using ChessLibrary.Enums;
+    using ChessLibrary.Interfaces;
+
+    public class Piece : IPiece
     {
-        public Piece(PieceTypes aType, PieceColors aColor)
+        public Piece(PieceType aType, PieceColor aColor)
         {
             PieceType = aType;
             PieceColor = aColor;
         }
 
-        public PieceTypes PieceType { get; set; }
+        public PieceType PieceType { get; set; }
 
-        public PieceColors PieceColor { get; set; }
+        public PieceColor PieceColor { get; set; }
 
         public int PieceMoveCounter { get; set; } = 0;
 
-    }
-
-    public enum PieceTypes
-    {
-        Free,
-        Pawn,
-        Rook,
-        Bishop,
-        Knight,
-        Queen,
-        King,
-    }
-
-    public enum PieceColors
-    {
-        White,
-        Black,
-        None,
     }
 }
