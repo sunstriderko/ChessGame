@@ -1,3 +1,5 @@
 ﻿/.vs/ChessGame
 /ChessGame/obj
 /ChessLibrary/obj
+/ChessGame/bin
+/ChessLibrary/bin
