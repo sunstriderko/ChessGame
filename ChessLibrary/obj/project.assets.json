@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Adam\\Source\\Repos\\ChessGame\\ChessLibrary\\ChessLibrary.csproj",
+      "projectUniqueName": "C:\\Users\\Adam\\source\\repos\\ChessGame\\ChessLibrary\\ChessLibrary.csproj",
       "projectName": "ChessLibrary",
-      "projectPath": "C:\\Users\\Adam\\Source\\Repos\\ChessGame\\ChessLibrary\\ChessLibrary.csproj",
+      "projectPath": "C:\\Users\\Adam\\source\\repos\\ChessGame\\ChessLibrary\\ChessLibrary.csproj",
       "packagesPath": "C:\\Users\\Adam\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Adam\\Source\\Repos\\ChessGame\\ChessLibrary\\obj\\",
+      "outputPath": "C:\\Users\\Adam\\source\\repos\\ChessGame\\ChessLibrary\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Adam\\AppData\\Roaming\\NuGet\\NuGet.Config",

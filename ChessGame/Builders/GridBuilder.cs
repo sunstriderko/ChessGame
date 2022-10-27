@@ -1,20 +1,16 @@
-﻿using System;
-using System.Windows;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Shapes;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using System.Windows.Media;
-
-namespace ChessGame.Builders
+﻿namespace ChessGame.Builders
 {
+    using System.Windows.Controls;
+    using System.Windows.Media;
+    using System.Windows.Shapes;
+
     public static class GridBuilder
     {
+        private readonly static int height = 100;
+        private readonly static int width = 100;
+
         public static Grid GridDeployer(Grid model)
         {
-            int height = 100;
-            int width = 100;
             SolidColorBrush stroke = Brushes.Black;
             SolidColorBrush fillColor;
 
