@@ -9,10 +9,16 @@
         private readonly static int height = 100;
         private readonly static int width = 100;
 
+        private readonly static string whiteField = "#FFF0C587";
+        private readonly static string brownField = "#FF553208";
+
         public static Grid GridDeployer(Grid model)
         {
-            SolidColorBrush stroke = Brushes.Black;
             SolidColorBrush fillColor;
+            SolidColorBrush stroke = Brushes.Black;
+
+            var whiteFillColor = (SolidColorBrush)(new BrushConverter().ConvertFrom(whiteField));
+            var brownFillColor = (SolidColorBrush)(new BrushConverter().ConvertFrom(brownField));
 
             for (int i = 0; i < 8; i++)
             {
@@ -20,12 +26,12 @@
                 {
                     if ((i % 2 == 0 && j % 2 != 0) || (i % 2 != 0 && j % 2 == 0))
                     {
-                        fillColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFF0C587"));
+                        fillColor = whiteFillColor;
                     }
 
                     else
                     {
-                        fillColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF553208"));
+                        fillColor = brownFillColor;
                     }
 
                     Rectangle rectangle = new Rectangle()

@@ -1,62 +1,60 @@
-﻿using System;
-using System.Windows;
-using ChessGame.Builders;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using ChessLibrary.Models;
-using System.Windows.Input;
-using System.Collections.Generic;
-using System.Linq;
-using ChessLibrary.Enums;
-
-namespace ChessGame
+﻿namespace ChessGame
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using ChessGame.Builders;
+    using ChessLibrary.Enums;
+    using ChessLibrary.Interfaces;
+    using ChessLibrary.Models;
+
     public partial class MainWindow : Window
     {
         #region Constants (Pieces images)
-        const string pawnImageBlack = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_black_pawn_T.png";
-        const string rookImageBlack = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_black_rook_T.png";
-        const string bishopImageBlack = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_black_bishop_T.png";
-        const string knightImageBlack = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_black_knight_T.png";
-        const string queenImageBlack = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_black_queen_T.png";
-        const string kingImageBlack = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_black_king_T.png";
+        private const string pawnImageBlack = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_black_pawn_T.png";
+        private const string rookImageBlack = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_black_rook_T.png";
+        private const string bishopImageBlack = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_black_bishop_T.png";
+        private const string knightImageBlack = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_black_knight_T.png";
+        private const string queenImageBlack = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_black_queen_T.png";
+        private const string kingImageBlack = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_black_king_T.png";
 
-        const string pawnImageWhite = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_white_pawn_T.png";
-        const string rookImageWhite = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_white_rook_T.png";
-        const string bishopImageWhite = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_white_bishop_T.png";
-        const string knightImageWhite = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_white_knight_T.png";
-        const string queenImageWhite = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_white_queen_T.png";
-        const string kingImageWhite = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_white_king_T.png";
+        private const string pawnImageWhite = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_white_pawn_T.png";
+        private const string rookImageWhite = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_white_rook_T.png";
+        private const string bishopImageWhite = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_white_bishop_T.png";
+        private const string knightImageWhite = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_white_knight_T.png";
+        private const string queenImageWhite = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_white_queen_T.png";
+        private const string kingImageWhite = "https://wpclipart.com/dl.php?img=/recreation/games/chess/chess_set_1/chess_piece_white_king_T.png";
         #endregion
 
         #region Variables
-        Piece[,] myBoard = new Piece[,] { };
-        Button buttonClickOne;
-        Button buttonClickTwo;
-        Button castleButtonOne;
-        Button castleButtonTwo;
-        List<UIElement> listElements;
-        int pressLeftMouseButton;
-        int pressRightMouseButton;
-        int previousColumn;
-        int previousRow;
-        int nextColumn;
-        int nextRow;
-        Piece previousPiece;
-        Piece nextPiece;
-        Piece lastTurn;
-        bool validMove;
-        bool blockCheck = true;
-        int placeholderColumn;
-        int placeholderRow;
-        int turnCounter = 1;
-        bool turnCheck;
-        bool castleCheck;
-        bool enPassantCheck;
+        private IPiece[,] myBoard = new IPiece[,] { };
+        private Button buttonClickOne;
+        private Button buttonClickTwo;
+        private Button castleButtonOne;
+        private Button castleButtonTwo;
+        private IEnumerable<UIElement> listElements;
+        private int pressLeftMouseButton;
+        private int pressRightMouseButton;
+        private int previousColumn;
+        private int previousRow;
+        private int nextColumn;
+        private int nextRow;
+        private IPiece previousPiece;
+        private IPiece nextPiece;
+        private IPiece lastTurn;
+        private bool validMove;
+        private bool blockCheck = true;
+        private int placeholderColumn;
+        private int placeholderRow;
+        private int turnCounter = 1;
+        private bool turnCheck;
+        private bool castleCheck;
+        private bool enPassantCheck;
         #endregion
 
         public MainWindow()
@@ -73,7 +71,7 @@ namespace ChessGame
         }
 
         #region Board
-        public void PiecesDeployer()
+        private void PiecesDeployer()
         {
             for (int i = 0; i < 8; i++)
             {
@@ -201,7 +199,7 @@ namespace ChessGame
             }
         }
 
-        public void VirtualBoardDeployer()
+        private void VirtualBoardDeployer()
         {
             myBoard = new Piece[,] {
                 {new Piece(PieceType.Rook,PieceColor.Black),new Piece(PieceType.Knight,PieceColor.Black), new Piece(PieceType.Bishop,PieceColor.Black),new Piece(PieceType.King,PieceColor.Black), new Piece(PieceType.Queen,PieceColor.Black), new Piece(PieceType.Bishop,PieceColor.Black), new Piece(PieceType.Knight,PieceColor.Black), new Piece(PieceType.Rook,PieceColor.Black) },
@@ -217,7 +215,7 @@ namespace ChessGame
         #endregion
 
         #region Events
-        public void RightButton_Click(object sender, RoutedEventArgs e)
+        private void RightButton_Click(object sender, RoutedEventArgs e)
         {
             if (pressRightMouseButton < 1)
             {
@@ -230,7 +228,7 @@ namespace ChessGame
             }
         }
 
-        public void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (pressLeftMouseButton == 0)
             {
@@ -329,123 +327,123 @@ namespace ChessGame
         #endregion
 
         #region Pieces/Turn successed
-        public void PieceReplacer(Piece model, Button modelButton)
+        private void PieceReplacer(IPiece piece, Button pieceButton)
         {
-            if (model.PieceType == PieceType.Pawn)
+            if (piece.PieceType == PieceType.Pawn)
             {
-                if (model.PieceColor == PieceColor.White)
+                if (piece.PieceColor == PieceColor.White)
                 {
-                    modelButton.Content = new Image
+                    pieceButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(pawnImageWhite)),
                     };
                 }
-                else if (model.PieceColor == PieceColor.Black)
+                else if (piece.PieceColor == PieceColor.Black)
                 {
-                    modelButton.Content = new Image
+                    pieceButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(pawnImageBlack)),
                     };
                 }
             }
 
-            else if (model.PieceType == PieceType.Rook)
+            else if (piece.PieceType == PieceType.Rook)
             {
-                if (model.PieceColor == PieceColor.White)
+                if (piece.PieceColor == PieceColor.White)
                 {
-                    modelButton.Content = new Image
+                    pieceButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(rookImageWhite)),
                     };
                 }
-                else if (model.PieceColor == PieceColor.Black)
+                else if (piece.PieceColor == PieceColor.Black)
                 {
-                    modelButton.Content = new Image
+                    pieceButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(rookImageBlack)),
                     };
                 }
             }
 
-            else if (model.PieceType == PieceType.Bishop)
+            else if (piece.PieceType == PieceType.Bishop)
             {
-                if (model.PieceColor == PieceColor.White)
+                if (piece.PieceColor == PieceColor.White)
                 {
-                    modelButton.Content = new Image
+                    pieceButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(bishopImageWhite)),
                     };
                 }
-                else if (model.PieceColor == PieceColor.Black)
+                else if (piece.PieceColor == PieceColor.Black)
                 {
-                    modelButton.Content = new Image
+                    pieceButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(bishopImageBlack)),
                     };
                 }
             }
 
-            else if (model.PieceType == PieceType.Knight)
+            else if (piece.PieceType == PieceType.Knight)
             {
-                if (model.PieceColor == PieceColor.White)
+                if (piece.PieceColor == PieceColor.White)
                 {
-                    modelButton.Content = new Image
+                    pieceButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(knightImageWhite)),
                     };
                 }
-                else if (model.PieceColor == PieceColor.Black)
+                else if (piece.PieceColor == PieceColor.Black)
                 {
-                    modelButton.Content = new Image
+                    pieceButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(knightImageBlack)),
                     };
                 }
             }
 
-            else if (model.PieceType == PieceType.Queen)
+            else if (piece.PieceType == PieceType.Queen)
             {
-                if (model.PieceColor == PieceColor.White)
+                if (piece.PieceColor == PieceColor.White)
                 {
-                    modelButton.Content = new Image
+                    pieceButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(queenImageWhite)),
                     };
                 }
-                else if (model.PieceColor == PieceColor.Black)
+                else if (piece.PieceColor == PieceColor.Black)
                 {
-                    modelButton.Content = new Image
+                    pieceButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(queenImageBlack)),
                     };
                 }
             }
 
-            else if (model.PieceType == PieceType.King)
+            else if (piece.PieceType == PieceType.King)
             {
-                if (model.PieceColor == PieceColor.White)
+                if (piece.PieceColor == PieceColor.White)
                 {
-                    modelButton.Content = new Image
+                    pieceButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(kingImageWhite)),
                     };
                 }
-                else if (model.PieceColor == PieceColor.Black)
+                else if (piece.PieceColor == PieceColor.Black)
                 {
-                    modelButton.Content = new Image
+                    pieceButton.Content = new Image
                     {
                         Source = new BitmapImage(new Uri(kingImageBlack)),
                     };
                 }
             }
 
-            else if (model.PieceType == PieceType.Free)
+            else if (piece.PieceType == PieceType.Free)
             {
-                modelButton.Content = new Image { };
+                pieceButton.Content = new Image { };
             }
         }
 
-        public void MoveReseter()
+        private void MoveReseter()
         {
             pressLeftMouseButton = 0;
             pressRightMouseButton = 0;
@@ -466,16 +464,16 @@ namespace ChessGame
         #endregion
 
         #region Checkers
-        public bool BlockChecker(int previousModelColumn, int previousModelRow, int nextModelColumn, int nextModelRow, Piece modelPiece)
+        private bool BlockChecker(int previousPieceColumn, int previousPieceRow, int nextPieceColumn, int nextPieceRow, IPiece piece)
         {
 
-            placeholderRow = previousModelRow - nextModelRow;
-            placeholderColumn = previousModelColumn - nextModelColumn;
+            placeholderRow = previousPieceRow - nextPieceRow;
+            placeholderColumn = previousPieceColumn - nextPieceColumn;
 
             placeholderRow = PlaceholdersFixer(placeholderRow);
             placeholderColumn = PlaceholdersFixer(placeholderColumn);
 
-            if (modelPiece.PieceType == PieceType.Knight)
+            if (piece.PieceType == PieceType.Knight)
             {
                 return true;
             }
@@ -485,7 +483,7 @@ namespace ChessGame
                 for (int i = placeholderColumn; i != 0; i = IncrementWorker(i))
                 {
 
-                    if (myBoard[previousModelRow, previousModelColumn - i].PieceType != PieceType.Free)
+                    if (myBoard[previousPieceRow, previousPieceColumn - i].PieceType != PieceType.Free)
                     {
                         blockCheck = false;
                         break;
@@ -503,7 +501,7 @@ namespace ChessGame
                 for (int i = placeholderRow; i != 0; i = IncrementWorker(i))
                 {
 
-                    if (myBoard[previousModelRow - i, previousModelColumn].PieceType != PieceType.Free)
+                    if (myBoard[previousPieceRow - i, previousPieceColumn].PieceType != PieceType.Free)
                     {
                         blockCheck = false;
                         break;
@@ -521,7 +519,7 @@ namespace ChessGame
                 int j = placeholderColumn;
                 for (int i = placeholderRow; i != 0; i = IncrementWorker(i))
                 {
-                    if (myBoard[previousModelRow - i, previousModelColumn - j].PieceType != PieceType.Free)
+                    if (myBoard[previousPieceRow - i, previousPieceColumn - j].PieceType != PieceType.Free)
                     {
                         blockCheck = false;
                         break;
@@ -538,14 +536,14 @@ namespace ChessGame
             return blockCheck;
         }
 
-        public bool TurnChecker(Piece model)
+        private bool TurnChecker(IPiece piece)
         {
-            if (turnCounter % 2 != 0 && model.PieceColor == PieceColor.White)
+            if (turnCounter % 2 != 0 && piece.PieceColor == PieceColor.White)
             {
                 return true;
             }
 
-            else if (turnCounter % 2 == 0 && model.PieceColor == PieceColor.Black)
+            else if (turnCounter % 2 == 0 && piece.PieceColor == PieceColor.Black)
             {
                 return true;
             }
@@ -559,35 +557,35 @@ namespace ChessGame
         #endregion
 
         #region Invalid moves messengers
-        public void InvalidMover()
+        private void InvalidMover()
         {
             MessageBox.Show("Invalid move. Submit a legit move only!.", "Invalid move.", MessageBoxButton.OK);
 
             MoveReseter();
         }
 
-        public void BlockedMover()
+        private void BlockedMover()
         {
             MessageBox.Show("You submitted a illegal move. Your piece is blocked!", "Invalid move", MessageBoxButton.OK);
 
             MoveReseter();
         }
 
-        public void TurnMover()
+        private void TurnMover()
         {
             MessageBox.Show("You submitted a illegal move. It is not your turn!", "Invalid move", MessageBoxButton.OK);
 
             MoveReseter();
         }
 
-        public void CastleMover()
+        private void CastleMover()
         {
             MessageBox.Show("You submitted a illegal move. Castling in this form is not allowed anymore!", "Invalid move", MessageBoxButton.OK);
 
             MoveReseter();
         }
 
-        public void EnPassantMover()
+        private void EnPassantMover()
         {
             MessageBox.Show("You submitted a illegal move. En passant in this form is not allowed!", "Invalid move", MessageBoxButton.OK);
 
@@ -596,7 +594,7 @@ namespace ChessGame
         #endregion
 
         #region Grid numbering fixers
-        public int PlaceholdersFixer(int model)
+        private int PlaceholdersFixer(int model)
         {
             if (model > 0)
             {
@@ -611,7 +609,7 @@ namespace ChessGame
             return model;
         }
 
-        public int IncrementWorker(int model)
+        private int IncrementWorker(int model)
         {
             if (model > 0)
             {
@@ -627,24 +625,24 @@ namespace ChessGame
         }
         #endregion 
 
-        public void SelectedIndicator(Button model)
+        private void SelectedIndicator(Button model)
         {
             model.Background = Brushes.Yellow;
         }
 
-        public void TurnHelper(Border modelBorder, int modelCounter)
+        private void TurnHelper(Border modelBorder, int modelCounter)
         {
             turnIndicatorBorder = GridBuilder.TurnIndicator(modelBorder, modelCounter);
         }
 
         //maybe re-do CastleChecker with searching function + loop with is
-        public bool CastlingChecker(Piece model, Piece modelWhiteRookLeft, Piece modelWhiteRookRight, Piece modelBlackRookLeft, Piece modelBlackRookRight, int modelPreviousColumn, int modelNextColumn)
+        private bool CastlingChecker(IPiece piece, IPiece pieceWhiteRookLeft, IPiece pieceWhiteRookRight, IPiece pieceBlackRookLeft, IPiece pieceBlackRookRight, int piecePreviousColumn, int pieceNextColumn)
         {
-            if (model.PieceType == PieceType.King && (previousColumn == nextColumn + 2 || previousColumn == nextColumn - 2))
+            if (piece.PieceType == PieceType.King && (previousColumn == nextColumn + 2 || previousColumn == nextColumn - 2))
             {
-                if (model.PieceColor == PieceColor.White)
+                if (piece.PieceColor == PieceColor.White)
                 {
-                    if (modelWhiteRookLeft.PieceType == PieceType.Rook && modelWhiteRookLeft.PieceMoveCounter == 0 && modelPreviousColumn == modelNextColumn + 2)
+                    if (pieceWhiteRookLeft.PieceType == PieceType.Rook && pieceWhiteRookLeft.PieceMoveCounter == 0 && piecePreviousColumn == pieceNextColumn + 2)
                     {
                         if (castleButtonOne != null && castleButtonTwo != null && Grid.GetColumn(castleButtonTwo) == 3 && Grid.GetRow(castleButtonTwo) == 7)
                         {
@@ -664,7 +662,7 @@ namespace ChessGame
                         }
                     }
 
-                    else if (modelWhiteRookRight.PieceType == PieceType.Rook && modelWhiteRookRight.PieceMoveCounter == 0 && modelPreviousColumn == modelNextColumn - 2)
+                    else if (pieceWhiteRookRight.PieceType == PieceType.Rook && pieceWhiteRookRight.PieceMoveCounter == 0 && piecePreviousColumn == pieceNextColumn - 2)
                     {
                         if (castleButtonOne != null && castleButtonTwo != null && myBoard[7, 6].PieceType == PieceType.Free && Grid.GetColumn(castleButtonTwo) == 5 && Grid.GetRow(castleButtonTwo) == 7)
                         {
@@ -690,9 +688,9 @@ namespace ChessGame
                     }
                 }
 
-                else if (model.PieceColor == PieceColor.Black)
+                else if (piece.PieceColor == PieceColor.Black)
                 {
-                    if (modelBlackRookLeft.PieceType == PieceType.Rook && modelBlackRookLeft.PieceMoveCounter == 0 && modelPreviousColumn == modelNextColumn + 2)
+                    if (pieceBlackRookLeft.PieceType == PieceType.Rook && pieceBlackRookLeft.PieceMoveCounter == 0 && piecePreviousColumn == pieceNextColumn + 2)
                     {
                         if (castleButtonOne != null && castleButtonTwo != null && Grid.GetColumn(castleButtonTwo) == 3 && Grid.GetRow(castleButtonTwo) == 0)
                         {
@@ -711,7 +709,7 @@ namespace ChessGame
                         }
                     }
 
-                    else if (modelBlackRookRight.PieceType == PieceType.Rook && modelBlackRookRight.PieceMoveCounter == 0 && modelPreviousColumn == modelNextColumn - 2)
+                    else if (pieceBlackRookRight.PieceType == PieceType.Rook && pieceBlackRookRight.PieceMoveCounter == 0 && piecePreviousColumn == pieceNextColumn - 2)
                     {
                         if (castleButtonOne != null && castleButtonTwo != null && myBoard[0, 6].PieceType == PieceType.Free && Grid.GetColumn(castleButtonTwo) == 5 && Grid.GetRow(castleButtonTwo) == 0)
                         {
@@ -746,32 +744,32 @@ namespace ChessGame
             return castleCheck;
         }
 
-        public bool EnPassantTakeChecker(Piece model, int modelPreviousColumn, int modelPreviousRow, int modelNextColumn, int modelNextRow)
+        private bool EnPassantTakeChecker(IPiece piece, int piecePreviousColumn, int piecePreviousRow, int pieceNextColumn, int pieceNextRow)
         {
-            if (model.PieceType == PieceType.Pawn && ((modelPreviousColumn == modelNextColumn + 1) || (modelPreviousColumn == modelNextColumn - 1)))
+            if (piece.PieceType == PieceType.Pawn && ((piecePreviousColumn == pieceNextColumn + 1) || (piecePreviousColumn == pieceNextColumn - 1)))
             {
-                if (model.PieceColor == PieceColor.White && modelPreviousRow == modelNextRow + 1 && myBoard[nextRow + 1,nextColumn] == lastTurn && lastTurn.PieceMoveCounter == 1 && lastTurn.PieceType == PieceType.Pawn)
+                if (piece.PieceColor == PieceColor.White && piecePreviousRow == pieceNextRow + 1 && myBoard[nextRow + 1,nextColumn] == lastTurn && lastTurn.PieceMoveCounter == 1 && lastTurn.PieceType == PieceType.Pawn)
                 {
                     myBoard[nextRow + 1, nextColumn].PieceColor = PieceColor.None;
                     myBoard[nextRow + 1, nextColumn].PieceType = PieceType.Free;
 
-                    Piece enPassantDead = myBoard[nextRow + 1, nextColumn];
+                    IPiece enPassantDead = myBoard[nextRow + 1, nextColumn];
                     
-                    listElements = FindByCell(MainGrid, nextRow + 1, modelNextColumn + 1);
+                    listElements = FindByCell(MainGrid, nextRow + 1, pieceNextColumn + 1);
 
                     SpecialMoveReplacer(listElements, enPassantDead);
 
                     return true;
                 }
 
-                else if (model.PieceColor == PieceColor.Black && modelPreviousRow == modelNextRow - 1 && myBoard[nextRow - 1, nextColumn] == lastTurn && lastTurn.PieceMoveCounter == 1 && lastTurn.PieceType == PieceType.Pawn)
+                else if (piece.PieceColor == PieceColor.Black && piecePreviousRow == pieceNextRow - 1 && myBoard[nextRow - 1, nextColumn] == lastTurn && lastTurn.PieceMoveCounter == 1 && lastTurn.PieceType == PieceType.Pawn)
                 {
                     myBoard[nextRow - 1, nextColumn].PieceColor = PieceColor.None;
                     myBoard[nextRow - 1, nextColumn].PieceType = PieceType.Free;
 
-                    Piece enPassantDead = myBoard[nextRow - 1, nextColumn];
+                    IPiece enPassantDead = myBoard[nextRow - 1, nextColumn];
 
-                    listElements = FindByCell(MainGrid, nextRow - 1, modelNextColumn + 1);
+                    listElements = FindByCell(MainGrid, nextRow - 1, pieceNextColumn + 1);
 
                     SpecialMoveReplacer(listElements, enPassantDead);
 
@@ -790,31 +788,31 @@ namespace ChessGame
             }            
         }
 
-        public void LastTurnFirstRoundFixer()
+        private void LastTurnFirstRoundFixer()
         {
             lastTurn = myBoard[0, 4];
         }
 
-        public int PieceMoveCounterFixer(int modelIntPrevious)
+        private int PieceMoveCounterFixer(int modelIntPrevious)
         {
             return modelIntPrevious + 1;
         }
 
-        public List<UIElement> FindByCell(Grid g, int row, int col)
+        private IEnumerable<UIElement> FindByCell(Grid g, int row, int col)
         {
-            List<UIElement> childs = g.Children.Cast<UIElement>().ToList();
-            List<UIElement> result = childs.Where(x => Grid.GetRow(x) == row && Grid.GetColumn(x) == col).ToList();
+            var childs = g.Children.Cast<UIElement>();
+            var result = childs.Where(x => Grid.GetRow(x) == row && Grid.GetColumn(x) == col);
 
             return result;
         }
 
-         public void SpecialMoveReplacer(List<UIElement> listModel, Piece model)
+        private void SpecialMoveReplacer(IEnumerable<UIElement> listModel, IPiece piece)
         {
             foreach (UIElement item in listModel)
             {
-                if (item is Button btn)
+                if (item is Button button)
                 {
-                    PieceReplacer(model, btn);
+                    PieceReplacer(piece, button);
                 }
             }
         }

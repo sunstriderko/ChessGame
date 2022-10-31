@@ -5,10 +5,10 @@
 
     public class Piece : IPiece
     {
-        public Piece(PieceType aType, PieceColor aColor)
+        public Piece(PieceType type, PieceColor color)
         {
-            PieceType = aType;
-            PieceColor = aColor;
+            PieceType = type;
+            PieceColor = color;
         }
 
         public PieceType PieceType { get; set; }

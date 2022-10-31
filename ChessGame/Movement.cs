@@ -1,16 +1,12 @@
-﻿using System;
-using ChessLibrary.Models;
-using ChessLibrary.Interfaces;
-using ChessGame;
-using System.Windows;
-using System.Windows.Controls;
-using ChessLibrary.Enums;
-
-namespace ChessGame
+﻿namespace ChessGame
 {
+    using System;
+    using ChessLibrary.Enums;
+    using ChessLibrary.Interfaces;
+
     public class Movement : IMoves
     {
-        public bool BishopMove(Piece model, int previousColumn, int previousRow, int nextColumn, int nextRow, bool validBool)
+        public bool BishopMove(IPiece model, int previousColumn, int previousRow, int nextColumn, int nextRow, bool validBool)
         {
             if (Math.Abs(previousColumn - nextColumn) == Math.Abs(previousRow - nextRow))
             {
@@ -25,7 +21,7 @@ namespace ChessGame
             return validBool;
         }
 
-        public bool KingMove(Piece model, int previousColumn, int previousRow, int nextColumn, int nextRow, bool validBool)
+        public bool KingMove(IPiece model, int previousColumn, int previousRow, int nextColumn, int nextRow, bool validBool)
         {
             if ((previousColumn == nextColumn + 1 || previousColumn == nextColumn - 1) && (previousRow == nextRow + 1 || previousRow == nextRow - 1))
             {
@@ -54,7 +50,7 @@ namespace ChessGame
             return validBool;
         }
 
-        public bool KnightMove(Piece model, int previousColumn, int previousRow, int nextColumn, int nextRow, bool validBool)
+        public bool KnightMove(IPiece model, int previousColumn, int previousRow, int nextColumn, int nextRow, bool validBool)
         {
             if ((previousColumn == nextColumn + 1 || previousColumn == nextColumn - 1) && (previousRow == nextRow + 2 || previousRow == nextRow - 2))
             {
@@ -74,7 +70,7 @@ namespace ChessGame
             return validBool;
         }
 
-        public bool PawnMove(Piece modelPrevious, Piece modelNext, int previousColumn, int previousRow, int nextColumn, int nextRow, bool validBool) 
+        public bool PawnMove(IPiece modelPrevious, IPiece modelNext, int previousColumn, int previousRow, int nextColumn, int nextRow, bool validBool) 
         {
             if (modelPrevious.PieceColor == PieceColor.White)
             {
@@ -145,7 +141,7 @@ namespace ChessGame
             return validBool;
         }
 
-        public bool QueenMove(Piece model, int previousColumn, int previousRow, int nextColumn, int nextRow, bool validBool)
+        public bool QueenMove(IPiece model, int previousColumn, int previousRow, int nextColumn, int nextRow, bool validBool)
         {
             if (previousColumn == nextColumn || previousRow == nextRow)
             {
@@ -165,7 +161,7 @@ namespace ChessGame
             return validBool;
         }
 
-        public bool RookMove(Piece model, int previousColumn, int previousRow, int nextColumn, int nextRow, bool validBool)
+        public bool RookMove(IPiece model, int previousColumn, int previousRow, int nextColumn, int nextRow, bool validBool)
         {
             if (previousColumn == nextColumn || previousRow == nextRow)
             {
@@ -180,7 +176,7 @@ namespace ChessGame
             return validBool;
         }
 
-        public bool ValidMoveChecker(bool validation, Piece previousPiece, Piece nextPiece, int previousColumn, int previousRow, int nextColumn, int nextRow)
+        public bool ValidMoveChecker(bool validation, IPiece previousPiece, IPiece nextPiece, int previousColumn, int previousRow, int nextColumn, int nextRow)
         {
             if (previousPiece.PieceColor != nextPiece.PieceColor  && previousPiece.PieceType != PieceType.Free)
             {

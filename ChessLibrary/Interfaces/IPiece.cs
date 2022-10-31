@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ChessLibrary.Interfaces
+﻿namespace ChessLibrary.Interfaces
 {
-    internal interface IPiece
+    using ChessLibrary.Enums;
+
+    public interface IPiece
     {
+        public PieceType PieceType { get; set; }
+
+        public PieceColor PieceColor { get; set; }
+
+        public int PieceMoveCounter { get; set; }
     }
 }
