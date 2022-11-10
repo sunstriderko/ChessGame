@@ -2,7 +2,7 @@
 {
     using ChessLibrary.Enums;
 
-    public interface IPiece
+    public interface IPiece : IMove
     {
         public PieceType PieceType { get; set; }
 

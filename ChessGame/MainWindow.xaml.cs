@@ -12,6 +12,7 @@
     using ChessLibrary.Enums;
     using ChessLibrary.Interfaces;
     using ChessLibrary.Models;
+    using ChessLibrary.Models.Pieces;
 
     public partial class MainWindow : Window
     {
@@ -77,22 +78,22 @@
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    Button but = new Button();
-                    but.Height = 100;
-                    but.Width = 100;
+                    Button button = new Button();
+                    button.Height = 100;
+                    button.Width = 100;
 
                     if (myBoard[i, j].PieceType == PieceType.Pawn)
                     {
                         if (myBoard[i, j].PieceColor == PieceColor.White)
                         {
-                            but.Content = new Image
+                            button.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(pawnImageWhite)),
                             };
                         }
                         else if (myBoard[i, j].PieceColor == PieceColor.Black)
                         {
-                            but.Content = new Image
+                            button.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(pawnImageBlack)),
                             };
@@ -103,14 +104,14 @@
                     {
                         if (myBoard[i, j].PieceColor == PieceColor.White)
                         {
-                            but.Content = new Image
+                            button.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(rookImageWhite)),
                             };
                         }
                         else if (myBoard[i, j].PieceColor == PieceColor.Black)
                         {
-                            but.Content = new Image
+                            button.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(rookImageBlack)),
                             };
@@ -121,14 +122,14 @@
                     {
                         if (myBoard[i, j].PieceColor == PieceColor.White)
                         {
-                            but.Content = new Image
+                            button.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(bishopImageWhite)),
                             };
                         }
                         else if (myBoard[i, j].PieceColor == PieceColor.Black)
                         {
-                            but.Content = new Image
+                            button.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(bishopImageBlack)),
                             };
@@ -139,14 +140,14 @@
                     {
                         if (myBoard[i, j].PieceColor == PieceColor.White)
                         {
-                            but.Content = new Image
+                            button.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(knightImageWhite)),
                             };
                         }
                         else if (myBoard[i, j].PieceColor == PieceColor.Black)
                         {
-                            but.Content = new Image
+                            button.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(knightImageBlack)),
                             };
@@ -157,14 +158,14 @@
                     {
                         if (myBoard[i, j].PieceColor == PieceColor.White)
                         {
-                            but.Content = new Image
+                            button.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(queenImageWhite)),
                             };
                         }
                         else if (myBoard[i, j].PieceColor == PieceColor.Black)
                         {
-                            but.Content = new Image
+                            button.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(queenImageBlack)),
                             };
@@ -175,26 +176,26 @@
                     {
                         if (myBoard[i, j].PieceColor == PieceColor.White)
                         {
-                            but.Content = new Image
+                            button.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(kingImageWhite)),
                             };
                         }
                         else if (myBoard[i, j].PieceColor == PieceColor.Black)
                         {
-                            but.Content = new Image
+                            button.Content = new Image
                             {
                                 Source = new BitmapImage(new Uri(kingImageBlack)),
                             };
                         }
                     }
 
-                    but.Background = Brushes.Transparent;
-                    but.Click += new RoutedEventHandler(Button_Click);
-                    but.MouseRightButtonUp += new MouseButtonEventHandler(RightButton_Click);
-                    MainGrid.Children.Add(but);
-                    Grid.SetColumn(but, j + 1);
-                    Grid.SetRow(but, i);
+                    button.Background = Brushes.Transparent;
+                    button.Click += new RoutedEventHandler(Button_Click);
+                    button.MouseRightButtonUp += new MouseButtonEventHandler(RightButton_Click);
+                    MainGrid.Children.Add(button);
+                    Grid.SetColumn(button, j + 1);
+                    Grid.SetRow(button, i);
                 }
             }
         }
@@ -202,14 +203,14 @@
         private void VirtualBoardDeployer()
         {
             myBoard = new Piece[,] {
-                {new Piece(PieceType.Rook,PieceColor.Black),new Piece(PieceType.Knight,PieceColor.Black), new Piece(PieceType.Bishop,PieceColor.Black),new Piece(PieceType.King,PieceColor.Black), new Piece(PieceType.Queen,PieceColor.Black), new Piece(PieceType.Bishop,PieceColor.Black), new Piece(PieceType.Knight,PieceColor.Black), new Piece(PieceType.Rook,PieceColor.Black) },
-                {new Piece(PieceType.Pawn,PieceColor.Black), new Piece(PieceType.Pawn,PieceColor.Black), new Piece(PieceType.Pawn,PieceColor.Black), new Piece(PieceType.Pawn,PieceColor.Black), new Piece(PieceType.Pawn,PieceColor.Black), new Piece(PieceType.Pawn,PieceColor.Black), new Piece(PieceType.Pawn,PieceColor.Black), new Piece(PieceType.Pawn,PieceColor.Black) },
-                {new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None) },
-                {new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None) },
-                {new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None) },
-                {new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None) },
-                {new Piece(PieceType.Pawn,PieceColor.White), new Piece(PieceType.Pawn,PieceColor.White), new Piece(PieceType.Pawn,PieceColor.White), new Piece(PieceType.Pawn,PieceColor.White), new Piece(PieceType.Pawn,PieceColor.White), new Piece(PieceType.Pawn,PieceColor.White), new Piece(PieceType.Pawn,PieceColor.White), new Piece(PieceType.Pawn,PieceColor.White) },
-                {new Piece(PieceType.Rook,PieceColor.White),new Piece(PieceType.Knight,PieceColor.White), new Piece(PieceType.Bishop,PieceColor.White),new Piece(PieceType.King,PieceColor.White), new Piece(PieceType.Queen,PieceColor.White), new Piece(PieceType.Bishop,PieceColor.White), new Piece(PieceType.Knight,PieceColor.White), new Piece(PieceType.Rook,PieceColor.White) },
+                { new Rook(PieceType.Rook,PieceColor.Black),new Knight(PieceType.Knight,PieceColor.Black), new Bishop(PieceType.Bishop,PieceColor.Black),new King(PieceType.King,PieceColor.Black), new Queen(PieceType.Queen,PieceColor.Black), new Bishop(PieceType.Bishop,PieceColor.Black), new Piece(PieceType.Knight,PieceColor.Black), new Piece(PieceType.Rook,PieceColor.Black) },
+                { new Pawn(PieceType.Pawn,PieceColor.Black), new Pawn(PieceType.Pawn,PieceColor.Black), new Pawn(PieceType.Pawn,PieceColor.Black), new Pawn(PieceType.Pawn,PieceColor.Black), new Pawn(PieceType.Pawn,PieceColor.Black), new Pawn(PieceType.Pawn,PieceColor.Black), new Pawn(PieceType.Pawn,PieceColor.Black), new Pawn(PieceType.Pawn,PieceColor.Black) },
+                { new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None) },
+                { new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None) },
+                { new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None) },
+                { new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Piece(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None), new Free(PieceType.Free,PieceColor.None) },
+                { new Pawn(PieceType.Pawn,PieceColor.White), new Pawn(PieceType.Pawn,PieceColor.White), new Pawn(PieceType.Pawn,PieceColor.White), new Pawn(PieceType.Pawn,PieceColor.White), new Pawn(PieceType.Pawn,PieceColor.White), new Pawn(PieceType.Pawn,PieceColor.White), new Pawn(PieceType.Pawn,PieceColor.White), new Pawn(PieceType.Pawn,PieceColor.White) },
+                { new Rook(PieceType.Rook,PieceColor.White),new Knight(PieceType.Knight,PieceColor.White), new Bishop(PieceType.Bishop,PieceColor.White),new King(PieceType.King,PieceColor.White), new Queen(PieceType.Queen,PieceColor.White), new Bishop(PieceType.Bishop,PieceColor.White), new Knight(PieceType.Knight,PieceColor.White), new Rook(PieceType.Rook,PieceColor.White) },
             };
         }
         #endregion
@@ -248,9 +249,7 @@
                 nextRow = Grid.GetRow(buttonClickTwo);
                 nextPiece = myBoard[nextRow, nextColumn];
 
-                Movement mov = new Movement();
-
-                validMove = mov.ValidMoveChecker(validMove, previousPiece, nextPiece, previousColumn, previousRow, nextColumn, nextRow);
+                validMove = Movement.ValidMoveChecker(validMove, previousPiece, nextPiece, previousColumn, previousRow, nextColumn, nextRow);
 
                 if (validMove)
                 {

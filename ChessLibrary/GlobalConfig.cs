@@ -4,6 +4,6 @@ namespace ChessLibrary
 {
     public class GlobalConfig
     {
-        public static IMoves Move { get; private set; }
+        public static IMove Move { get; private set; }
     }
 }

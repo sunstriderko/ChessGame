@@ -17,5 +17,9 @@
 
         public int PieceMoveCounter { get; set; } = 0;
 
+        public virtual bool Move(IPiece previousModel, int previousColumn, int previousRow, int nextColumn, int nextRow, IPiece nextModel, bool validBool)
+        {
+            return false;
+        }
     }
 }
